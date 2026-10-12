@@ -1,0 +1,125 @@
+﻿{
+    "version": 2,
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "generator": "Visual Studio 17 2022",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                    "type": "FILEPATH"
+                }
+            },
+            "vendor": { "microsoft.com/VisualStudioSettings/CMake/1.0": { "hostOS": [ "Windows" ] } }
+        },
+        {
+            "name": "x64",
+            "inherits": "base",
+            "architecture": {
+                "value": "x64"
+            }
+        },
+        {
+            "name": "arm64",
+            "inherits": "base",
+            "architecture": {
+                "value": "arm64"
+            }
+        },
+        {
+            "name": "x86",
+            "inherits": "base",
+            "architecture": {
+                "value": "Win32"
+            }
+        },
+        {
+            "name": "ovpn3",
+            "hidden": true,
+            "cacheVariables": {
+                "CLI_OVPN3": "ON"
+            }
+        },
+        {
+            "name": "x64-ovpn3",
+            "inherits": [ "x64", "ovpn3" ]
+        },
+        {
+            "name": "arm64-ovpn3",
+            "inherits": [ "arm64", "ovpn3" ]
+        },
+        {
+            "name": "x86-ovpn3",
+            "inherits": [ "x86", "ovpn3" ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "x64-release",
+            "configurePreset": "x64",
+            "configuration": "Release"
+        },
+        {
+            "name": "x86-release",
+            "configurePreset": "x86",
+            "configuration": "Release"
+        },
+        {
+            "name": "arm64-release",
+            "configurePreset": "arm64",
+            "configuration": "Release"
+        },
+        {
+            "name": "x64-debug",
+            "configurePreset": "x64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "x64-asan",
+            "configurePreset": "x64",
+            "configuration": "Asan"
+        },
+        {
+            "name": "x86-debug",
+            "configurePreset": "x86",
+            "configuration": "Debug"
+        },
+        {
+            "name": "arm64-debug",
+            "configurePreset": "arm64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "x64-release-ovpn3",
+            "configurePreset": "x64-ovpn3",
+            "configuration": "Release"
+        },
+        {
+            "name": "x86-release-ovpn3",
+            "configurePreset": "x86-ovpn3",
+            "configuration": "Release"
+        },
+        {
+            "name": "arm64-release-ovpn3",
+            "configurePreset": "arm64-ovpn3",
+            "configuration": "Release"
+        },
+        {
+            "name": "x64-debug-ovpn3",
+            "configurePreset": "x64-ovpn3",
+            "configuration": "Debug"
+        },
+        {
+            "name": "x86-debug-ovpn3",
+            "configurePreset": "x86-ovpn3",
+            "configuration": "Debug"
+        },
+        {
+            "name": "arm64-debug-ovpn3",
+            "configurePreset": "arm64-ovpn3",
+            "configuration": "Debug"
+        }
+    ]
+}

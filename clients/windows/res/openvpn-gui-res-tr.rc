@@ -1,0 +1,539 @@
+/*
+ *  OpenVPN-GUI -- A Windows GUI for OpenVPN.
+ *
+ *  Copyright (C) 2004 Mathias Sundman <mathias@nilings.se>
+ *                2009 Heiko Hund <heikoh@users.sf.net>
+ *                2011 Hakan Darama <hakandarama@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program (see the file COPYING included with this
+ *  distribution); if not, write to the Free Software Foundation, Inc.,
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/* Passphrase Dialog */
+ID_DLG_PASSPHRASE DIALOGEX 6, 18, 160, 83
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Şifreyi Giriniz:", 201, 6, 6, 100, 10
+    EDITTEXT ID_EDT_PASSPHRASE, 6, 17, 107, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 126, 18, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    CHECKBOX "Şifreyi Kaydet", ID_CHK_SAVE_PASS, 6, 33, 100, 10
+    PUSHBUTTON "Tamam", IDOK, 20, 49, 50, 14
+    PUSHBUTTON "Çıkış", IDCANCEL, 90, 49, 50, 14
+    LTEXT "", ID_TXT_WARNING, 6, 65, 100, 10
+END
+
+/* Auth Username/Password Dialog */
+ID_DLG_AUTH DIALOGEX 6, 18, 180, 95
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Kullanıcı Adı:", ID_LTEXT_USERNAME, 6, 9, 50, 10
+    LTEXT "Şifre:", ID_LTEXT_PASSWORD, 6, 26, 50, 10
+    EDITTEXT ID_EDT_AUTH_USER, 50, 6, 104, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_AUTH_PASS, 50, 23, 104, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 24, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    CHECKBOX "Şifreyi Kaydet", ID_CHK_SAVE_PASS, 6, 42, 100, 10
+    PUSHBUTTON "Tamam", IDOK, 20, 58, 50, 14, BS_DEFPUSHBUTTON | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON "Çıkış", IDCANCEL, 90, 58, 52, 14
+    LTEXT "", ID_TXT_WARNING, 6, 80, 150, 10
+END
+
+/* Auth Username/Password/Challenge Dialog */
+ID_DLG_AUTH_CHALLENGE DIALOGEX 6, 18, 180, 129
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - User Authentication"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Kullanıcı Adı:", ID_LTEXT_USERNAME, 6, 9, 50, 10
+    LTEXT "Şifre:", ID_LTEXT_PASSWORD, 6, 26, 50, 10
+    LTEXT "Response:", ID_LTEXT_RESPONSE, 6, 60, 50, 10
+    EDITTEXT ID_EDT_AUTH_USER, 60, 6, 94, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_AUTH_PASS, 60, 23, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 24, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    LTEXT "", ID_TXT_AUTH_CHALLENGE, 6, 43, 148, 10
+    EDITTEXT ID_EDT_AUTH_CHALLENGE, 60, 57, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    CHECKBOX "Şifreyi Kaydet", ID_CHK_SAVE_PASS, 6, 76, 100, 10
+    PUSHBUTTON "Tamam", IDOK, 20, 92, 50, 14, BS_PUSHBUTTON | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON "Çıkış", IDCANCEL, 90, 92, 52, 14
+    LTEXT "", ID_TXT_WARNING, 6, 108, 150, 10
+END
+
+/* Challenge Response Dialog */
+ID_DLG_CHALLENGE_RESPONSE DIALOGEX 6, 18, 212, 72
+STYLE WS_SIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - Challenge Response"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "", ID_TXT_DESCRIPTION, 6, 9, 400, 20
+    LTEXT "Response:", ID_LTEXT_RESPONSE, 6, 30, 50, 10
+    EDITTEXT ID_EDT_RESPONSE, 60, 27, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 28, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    PUSHBUTTON "Tamam", IDOK, 20, 51, 50, 14, BS_PUSHBUTTON | WS_TABSTOP
+    PUSHBUTTON "Çıkış", IDCANCEL, 90, 51, 52, 14
+END
+
+/* Status Dialog */
+ID_DLG_STATUS DIALOG 6, 18, 380, 210
+STYLE WS_SIZEBOX | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | DS_CENTER
+CAPTION "模方安全"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Bağlanıyor…", ID_TXT_STATUS, 20, 5, 200, 10
+    LTEXT "", ID_TXT_BYTECOUNT, 20, 175, 200, 10
+    LTEXT "OpenVPN GUI 11.y.0.0/2.4.x", ID_TXT_VERSION, 220, 175, 150, 10
+    LTEXT "", ID_TXT_IP, 20, 160, 300, 10
+    PUSHBUTTON "Bağlantıyı Kes", ID_DISCONNECT, 50, 190, 50, 14
+    PUSHBUTTON "Yeniden Bağlan", ID_RESTART, 150, 190, 50, 14
+    PUSHBUTTON "&Ayır", ID_DETACH, 180, 190, 50, 14, WS_DISABLED
+    PUSHBUTTON "Gizle", ID_HIDE, 100, 190, 50, 14
+END
+
+/* Change Passphrase Dialog */
+ID_DLG_CHGPASS DIALOG 6, 18, 193, 82
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "模方安全 - Şifreyi değiştir"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Eski Şifre:", 171, 6, 9, 85, 10
+    LTEXT "Yeni Şifre:", 172, 6, 26, 85, 10
+    LTEXT "Tekrar Yeni Şifre:", 173, 6, 42, 85, 10
+    EDITTEXT ID_EDT_PASS_CUR, 65, 6, 120, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_PASS_NEW, 65, 23, 120, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_PASS_NEW2, 65, 39, 120, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON "Tamam", IDOK, 40, 59, 50, 14
+    PUSHBUTTON "Çıkış", IDCANCEL, 103, 59, 50, 14
+    LTEXT "", ID_TXT_KEYFORMAT, 0, 0, 0, 0
+    LTEXT "", ID_TXT_KEYFILE, 0, 0, 0, 0
+END
+
+/* Proxy Settings Dialog */
+ID_DLG_PROXY DIALOG 6, 18, 249, 104
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Proxy Ayarları"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    GROUPBOX "   ", 201, 6, 46, 235, 52
+    AUTORADIOBUTTON "OpenVPN konfigürasyon dosyasını kullan", ID_RB_PROXY_OPENVPN,
+                    13, 16, 200, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Sistem Proxy ayarlarını kullan",
+                    ID_RB_PROXY_MSIE, 13, 31, 200, 10
+    AUTORADIOBUTTON "Elle Ayarlama", ID_RB_PROXY_MANUAL, 13, 46, 59, 10
+    AUTORADIOBUTTON "HTTP Proxy", ID_RB_PROXY_HTTP, 20, 62, 90, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "SOCKS Proxy", ID_RB_PROXY_SOCKS, 120, 62, 90, 10
+    LTEXT "Adres:", ID_TXT_PROXY_ADDRESS, 20, 77, 32, 10
+    RTEXT "Port:", ID_TXT_PROXY_PORT, 171, 77, 20, 10
+    EDITTEXT ID_EDT_PROXY_ADDRESS, 53, 75, 117, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_PROXY_PORT, 196, 75, 30, 12, ES_AUTOHSCROLL
+END
+
+/* General Settings Dialog */
+ID_DLG_GENERAL DIALOGEX 6, 18, 249, 104
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Genel"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    GROUPBOX "Kullanıcı Arayüzü", 201, 6, 12, 235, 30
+    LTEXT "Dil:", ID_TXT_LANGUAGE, 17, 25, 52, 12
+    COMBOBOX ID_CMB_LANGUAGE, 31, 23, 197, 400, CBS_DROPDOWNLIST | WS_TABSTOP
+    GROUPBOX "Başlangıç", 202, 6, 47, 235, 30
+    AUTOCHECKBOX "Windows başlangıcında çalıştır", ID_CHK_STARTUP, 17, 59, 200, 12
+
+    GROUPBOX "Tercihler", ID_GROUPBOX3, 6, 82, 235, 180
+    AUTOCHECKBOX "Günlüğe ekle", ID_CHK_LOG_APPEND, 17, 95, 60, 10
+    AUTOCHECKBOX "Betik penceresini göster", ID_CHK_SHOW_SCRIPT_WIN, 17, 110, 200, 10
+    AUTOCHECKBOX "Sessiz bağlantı", ID_CHK_SILENT, 17, 125, 200, 10
+    AUTOCHECKBOX "Her zaman etkileşimli servis kullan", ID_CHK_ALWAYS_USE_ISERVICE, 17, 140, 200, 10
+    LTEXT "Balon Bildirimi Göster", ID_TXT_BALLOON, 17, 155, 100, 10
+    AUTORADIOBUTTON "Bağlanırken", ID_RB_BALLOON1, 28, 170, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Bağlanırken/yeniden bağlanırken", ID_RB_BALLOON2, 86, 170, 90, 10
+    AUTORADIOBUTTON "Asla", ID_RB_BALLOON0, 181, 170, 40, 10
+    LTEXT "Kalıcı Bağlantılar", ID_TXT_PERSISTENT, 17, 185, 100, 10
+    AUTORADIOBUTTON "&Otomatik", ID_RB_BALLOON3, 28, 200, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Manuel", ID_RB_BALLOON4, 86, 200, 90, 10
+    AUTORADIOBUTTON "&Devre Dışı", ID_RB_BALLOON5, 181, 200, 40, 10
+    AUTOCHECKBOX "Oturum Açma Öncesi &Erişim Sağlayıcıyı Etkinleştir (yönetici erişimi gerektirir)", ID_CHK_PLAP_REG, 17, 215, 200, 10
+    AUTOCHECKBOX "Aktif bağlantıların otomatik yeniden başlatılmasını etkinleştir", ID_CHK_AUTO_RESTART, 17, 230, 200, 10
+    AUTOCHECKBOX "OTP sorgusu yap ve şifreyle birleştir", ID_CHK_CONCAT_OTP, 17, 245, 200, 10
+END
+
+/* Advanced Dialog */
+ID_DLG_ADVANCED DIALOGEX 6, 18, 252, ADVANCED_DIALOG_HEIGHT
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Gelişmiş"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    GROUPBOX "Yapılandırma Dosyaları", 201, 6, 12, 235, 45
+    LTEXT "Klasör:", ID_TXT_FOLDER, 17, 25, 32, 10
+    LTEXT "Uzantı:", ID_TXT_EXTENSION, 17, 40, 52, 10
+    EDITTEXT ID_EDT_CONFIG_DIR, 53, 23, 150, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_CONFIG_EXT, 53, 38, 25, 12, ES_AUTOHSCROLL
+    PUSHBUTTON "…", ID_BTN_CONFIG_DIR, 208, 23, 25, 12
+
+    GROUPBOX "Günlük Dosyaları", 202, 6, 62, 235, 30
+    LTEXT "Klasör:", ID_TXT_FOLDER1, 17, 74, 32, 10
+    EDITTEXT ID_EDT_LOG_DIR, 53, 72, 150, 12, ES_AUTOHSCROLL
+    PUSHBUTTON "…", ID_BTN_LOG_DIR, 208, 72, 25, 12
+
+    GROUPBOX "Betik Zaman Aşımı", 203, 6, 97, 235, 60
+    LTEXT "Bağlantı öncesi betik zaman aşımı:", ID_TXT_PRECONNECT_TIMEOUT, 17, 110, 100, 10
+    LTEXT "Bağlantı betiği zaman aşımı:", ID_TXT_CONNECT_TIMEOUT, 17, 125, 90, 10
+    LTEXT "Bağlantı kesme betiği zaman aşımı:", ID_TXT_DISCONNECT_TIMEOUT, 17, 140, 90, 10
+    EDITTEXT ID_EDT_PRECONNECT_TIMEOUT, 103, 108, 20, 12, ES_AUTOHSCROLL|ES_NUMBER
+    EDITTEXT ID_EDT_CONNECT_TIMEOUT, 103, 123, 20, 12, ES_AUTOHSCROLL|ES_NUMBER
+    EDITTEXT ID_EDT_DISCONNECT_TIMEOUT, 103, 138, 20, 12, ES_AUTOHSCROLL|ES_NUMBER
+
+    GROUPBOX "Yönetim arayüzü", 204, 6, 163, 235, 30
+    LTEXT "Port ofseti:", 205, 17, 175, 75, 10
+    EDITTEXT ID_EDT_MGMT_PORT, 103, 173, 30, 12, ES_AUTOHSCROLL
+
+    GROUPBOX "Yapılandırma menüsü görünümü", 206, 6, 198, 235, 30
+    AUTORADIOBUTTON "&Otomatik", ID_RB_BALLOON0, 28, 210, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Düz", ID_RB_BALLOON1, 88, 210, 50, 10
+    AUTORADIOBUTTON "&İç İçe", ID_RB_BALLOON2, 148, 210, 50, 10
+
+    GROUPBOX "Echo mesaj görüntüleme", 207, 6, 233, 235, 45
+    AUTORADIOBUTTON "&Otomatik", ID_RB_BALLOON3, 28, 245, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Asla", ID_RB_BALLOON4, 88, 245, 50, 10
+    LTEXT "Tekrarlanan mesajlar şu süre boyunca sessize alınır: ", 208, 17, 260, 125, 10
+    EDITTEXT ID_EDT_POPUP_MUTE, 150, 258, 30, 12, ES_AUTOHSCROLL
+    LTEXT "saat", 209, 190, 260, 40, 10
+
+#if ENABLE_OVPN3
+    GROUPBOX "OpenVPN Motoru", ID_RB_ENGINE_SELECTION, 6, 283, 235, 30
+    AUTORADIOBUTTON "OpenVPN2", ID_RB_ENGINE_OVPN2, 18, 296, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "OpenVPN3 (deneysel)", ID_RB_ENGINE_OVPN3, 76, 296, 100, 10
+#endif
+
+END
+
+/* About Dialog */
+ID_DLG_ABOUT DIALOG 6, 18, 249, 104
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Hakkında"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    ICON ID_ICO_APP, ID_ICON_ABOUT, 8, 16, 21, 20
+    LTEXT "OpenVPN GUI v%ls - OpenVPN için Windows Arayüzü\n\
+Copyright (C) 2004-2005 Mathias Sundman <info@openvpn.se>\n\
+Copyright (C) 2008-2014 Heiko Hund <heikoh@users.sf.net>\n\
+Copyright (C) 2012-2026 OpenVPN GUI contributors\n", ID_TXT_VERSION, 36, 15, 206, 50
+    LTEXT "https://github.com/OpenVPN/openvpn-gui/", ID_LTEXT_ABOUT2, 36, 55, 206, 42
+    LTEXT "OpenVPN - SSL/TLS tabanlı güvenli oturumlar, anahtar doğrulama \
+paket şifreleme, paket sıkıştırma ve paket doğrulama işlemlerini \
+tek bir TCP/UDP portu üzerinden güvenli IP tünelleri oluşturarak \
+yapabilen bir uygulamadır.\n\
+\n", ID_LTEXT_ABOUT3, 8, 70, 240, 64
+    LTEXT "Copyright (C) 2002-2026 OpenVPN Technologies, Inc <info@openvpn.net>\n\
+https://openvpn.net/", ID_LTEXT_ABOUT4, 8, 106, 240, 64
+END
+
+/* Proxy Authentication Dialog */
+ID_DLG_PROXY_AUTH DIALOGEX 29, 23, 170, 65
+STYLE DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - Proxy Oturumu Açma"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Kullanıcı Adı:", 201, 9, 8, 42, 10
+    EDITTEXT ID_EDT_PROXY_USER, 53, 5, 90, 12, ES_AUTOHSCROLL
+    LTEXT "Şifre:", 202, 9, 26, 42, 10
+    EDITTEXT ID_EDT_PROXY_PASS, 53, 23, 90, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 145, 24, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    PUSHBUTTON "Tamam", IDOK, 58, 43, 40, 14, BS_PUSHBUTTON | WS_TABSTOP | WS_DISABLED
+END
+
+/* URL Profile Import Dialog */
+ID_DLG_URL_PROFILE_IMPORT DIALOGEX 6, 18, 249, 95
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER | DS_SETFOREGROUND
+CAPTION "Erişim Sunucusundan Profil İçe Aktar"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "U&RL:", 201, 6, 9, 50, 10
+    EDITTEXT ID_EDT_URL, 60, 6, 183, 12, ES_AUTOHSCROLL
+    LTEXT "&Kullanıcı Adı:", 202, 6, 26, 50, 10
+    EDITTEXT ID_EDT_AUTH_USER, 60, 23, 94, 12, ES_AUTOHSCROLL
+    LTEXT "&Şifre:", ID_LTEXT_PASSWORD, 6, 42, 50, 10
+    EDITTEXT ID_EDT_AUTH_PASS, 60, 40, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 41, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    AUTOCHECKBOX "&Otomatik Giriş", ID_CHK_AUTOLOGIN, 6, 59, 100, 10
+    PUSHBUTTON "&Tamam", IDOK, 20, 76, 50, 14, BS_PUSHBUTTON | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON "&İptal", IDCANCEL, 90, 76, 52, 14
+END
+
+/* Query PKCS11-ID Dialog */
+ID_DLG_PKCS11_QUERY DIALOGEX 6, 18, 340, 242
+STYLE WS_SIZEBOX| WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER | DS_SETFONT
+CAPTION "Sertifika Seç"
+FONT 8, "Segoe UI"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Kullanılabilir PKCS11 Sertifikaları:", ID_TXT_PKCS11, 17, 12, 171, 12
+    CONTROL "", ID_LVW_PKCS11, "SysListView32", LVS_REPORT | LVS_SINGLESEL | WS_BORDER | WS_TABSTOP, 17, 25, 171,150
+    PUSHBUTTON "&Tamam", IDOK, 20, 200, 50, 14, BS_DEFPUSHBUTTON | WS_TABSTOP
+    PUSHBUTTON "&İptal", IDCANCEL, 90, 200, 50, 14, BS_PUSHBUTTON | WS_TABSTOP
+    PUSHBUTTON "&Yeniden Dene", IDRETRY, 160, 200, 50, 14, BS_PUSHBUTTON | WS_TABSTOP
+    LTEXT "", ID_TXT_WARNING, 6, 222, 190, 10
+END
+
+/* QR code dialog */
+ID_DLG_QR DIALOGEX 0, 0, 10, 10
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "Segoe UI"
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    CONTROL "", ID_STATIC_QR, "Static", SS_BITMAP | WS_VISIBLE | SS_CENTERIMAGE, 0, 0, 10, 10
+    LTEXT "Kimlik doğrulama işlemine devam etmek için bu QR kodunu mobil cihazınızla tarayın.", ID_TXT_QR, 0, 0, 10, 10, SS_CENTER | WS_VISIBLE | SS_EDITCONTROL
+END
+
+STRINGTABLE
+LANGUAGE LANG_TURKISH, SUBLANG_DEFAULT
+BEGIN
+    IDS_LANGUAGE_NAME "Türkçe - Turkish"
+
+    /* Tray - Resources */
+    IDS_TIP_CONNECTED "\nBağlanıldı: "
+    IDS_TIP_CONNECTING "\nBağlanılıyor: "
+    IDS_TIP_CONNECTED_SINCE "\nBağlanıldı: "
+    IDS_TIP_ASSIGNED_IP "\nBağlanılan IP: %ls"
+    IDS_MENU_IMPORT "İçe Aktar"
+    IDS_MENU_IMPORT_AS "Erişim Sunucusundan İçe Aktar…"
+    IDS_MENU_IMPORT_URL "URL'den İçe Aktar…"
+    IDS_MENU_IMPORT_FILE "Dosyadan İçe Aktar…"
+    IDS_MENU_SETTINGS "Ayarlar…"
+    IDS_MENU_CLOSE "Çıkış"
+    IDS_MENU_CONNECT "Bağlan"
+    IDS_MENU_DISCONNECT "Bağlantıyı Kes"
+    IDS_MENU_RECONNECT "Yeniden Bağlan"
+    IDS_MENU_STATUS "Durum"
+    IDS_MENU_VIEWLOG "Günlüğe Bak"
+    IDS_MENU_EDITCONFIG "Ayarlar"
+    IDS_MENU_CLEARPASS  "Kayıtlı Şifreleri Temizle"
+
+    /* Logviewer - Resources */
+    IDS_ERR_START_LOG_VIEWER "Olay görüntüleyici başlarken hata oluştu: %ls"
+    IDS_ERR_START_CONF_EDITOR "Ayar editörü başlarken hata oluştu: %ls"
+
+    /* OpenVPN */
+    IDS_NFO_NO_CONFIGS "Okunabilir bağlantı profilleri (yapılandırma dosyaları) bulunamadı.\n\
+""Dosyadan İçe Aktar..."" menüsünü kullanın veya yapılandırma dosyalarınızı ""%ls"" veya ""%ls"" konumuna kopyalayın."
+    IDS_ERR_CONFIG_NOT_AUTHORIZED "Bu bağlantıyı başlatmak (%ls) \
+""%ls"" grubuna üyelik gerektiriyor. Sistem yöneticinizle iletişime geçin.\n"
+    IDS_ERR_CONFIG_TRY_AUTHORIZE  "Starting this connection (%ls) requires membership in \
+""%ls"" group.\n\n\
+Do you want to add yourself to this group?\n\
+This action may prompt for administrative password or consent."
+    IDS_NFO_CONFIG_AUTH_PENDING   "Starting this connection (%ls) requires membership in \
+""%ls"" group.\n\n\
+Please complete the previous authorization dialog."
+    IDS_ERR_ADD_USER_TO_ADMIN_GROUP "Adding the user to ""%ls"" group failed."
+    IDS_ERR_CREATE_EVENT "Çıkılırken hata oluştu: %ls"
+    IDS_ERR_UNKNOWN_PRIORITY "Bilinmeyen öncelik ismi: %ls"
+    IDS_ERR_INIT_SEC_DESC "InitializeSecurityDescriptor hatası."
+    IDS_ERR_SET_SEC_DESC_ACL "SetSecurityDescriptorDacl hatası."
+    IDS_ERR_DUP_HANDLE_IN_WRITE "DuplicateHandle on hInputWrite hatası."
+    IDS_ERR_CREATE_PROCESS "CreateProcess hatası, exe='%ls' cmdline='%ls' dir='%ls'"
+    IDS_ERR_CREATE_THREAD_STATUS "CreateThread anında durum penceresi gösterilemedi hatası."
+    IDS_NFO_STATE_WAIT_TERM "Geçerli Durum: OpenVPN' in kapanması bekleniyor…"
+    IDS_NFO_STATE_CONNECTED "Geçerli Durum: Bağlandı"
+    IDS_NFO_STATE_ONHOLD "Geçerli Durum: Beklemede (bağlantı kesildi)"
+    IDS_NFO_NOW_CONNECTED "%ls şu an bağlı."
+    IDS_NFO_ASSIGN_IP "Atanan IP: %ls"
+    IDS_NFO_STATE_RECONNECTING "Geçerli Durum: Yeniden Bağlanılıyor"
+    IDS_NFO_STATE_DISCONNECTED "Geçerli Durum: Bağlantı Kesildi"
+    IDS_NFO_CONN_TERMINATED "%ls ile olan bağlantı kesildi. "
+    IDS_NFO_STATE_FAILED "Geçerli Durum: Bağlantı sağlanamadı."
+    IDS_NFO_CONN_FAILED "%ls ile bağlantı kurulamadı"
+    IDS_NFO_STATE_FAILED_RECONN "Geçerli Durum: Bağlantı sağlanamadı"
+    IDS_NFO_RECONN_FAILED "%ls ile yeniden bağlantı sağlanırken hata oluştu."
+    IDS_NFO_STATE_SUSPENDED "Geçerli Durum: Beklemede"
+    IDS_ERR_READ_STDOUT_PIPE "OpenVPN StdOut Pipe okunurken hata oluştu."
+    IDS_ERR_CREATE_EDIT_LOGWINDOW "Günlük dosyası oluşturulurken hata oluştu!!"
+    IDS_ERR_SET_SIZE "Boyut ayarlanırken hata oluştu!"
+    IDS_ERR_AUTOSTART_CONF "İstenilen konfigürasyon dosyası yeniden başlatılırken hata oluştu.: %ls"
+    IDS_ERR_CREATE_PIPE_IN_READ "CreatePipe on hInputRead başarısız oldu!."
+    IDS_NFO_STATE_CONNECTING "Geçerli Durum: Bağlanıyor!"
+    IDS_NFO_CONNECTION_XXX "OpenVPN Bağlantısı (%ls)"
+    IDS_NFO_STATE_CONN_SCRIPT "Geçerli Durum: Bağlantı betiği çalıştırılıyor"
+    IDS_NFO_STATE_DISCONN_SCRIPT "Geçerli Durum: Bağlantıyı koparmak için betik çalıştırılıyor"
+    IDS_ERR_RUN_CONN_SCRIPT "Bağlantı betiği çalıştırma hatası: %ls"
+    IDS_ERR_GET_EXIT_CODE "Bağlantı betiğinde ExitCode çalıştırılamadı: (%ls)"
+    IDS_ERR_CONN_SCRIPT_FAILED "Bağlantı betiği başarısız oldu. (exitcode=%ld)"
+    IDS_ERR_RUN_CONN_SCRIPT_TIMEOUT "Bağlantı betiği başarısız oldu. %d saniyede timeout oldu."
+    IDS_ERR_CONFIG_EXIST "Zaten '%ls' ismi ile kayıtlı bir ayar dosyası mevcut. \
+Ayrı klasörlerde olmadığı sürece, aynı isimle ayar dosyası \
+kayıt edemezsiniz."
+    /* main - Resources */
+    IDS_ERR_OPEN_DEBUG_FILE "Debug dosyası açılırken hata oluştu (%ls)"
+    IDS_ERR_CREATE_PATH "Could not create %ls path:\n%ls"
+    IDS_ERR_LOAD_RICHED20 "RICHED20.DLL yüklenemedi."
+    IDS_ERR_SHELL_DLL_VERSION "Sistemde bulunan shell32.dll verdsiyonu eski. (0x%lx). En az 5.0 versiyonuna sahip olmalısınız."
+    IDS_NFO_ACTIVE_CONN_EXIT "OpenVPN GUI ' yi kapatırsanız, açık olan bağlantılarınız sonlandırılacaktır.\
+\n\nÇıkmak istediğinize emin misiniz?"
+    IDS_ERR_PARSE_MGMT_OPTION "Could not parse --management option in <%ls%ls>."
+
+    /* options - Resources */
+    IDS_NFO_USAGE "--help\t\t\t: Yardım mesajını gözter.\n\
+--connect cnn \t\t: Başlangıçta otomatik olarak ""cnn"" e bağlan. (uzantılar dahil edilmelidir.)\n\
+\t\t\t   Örnek: openvpn-gui --connect office.ovpn\n\
+--command cmd [args]\t: Send a command to a running instance of the GUI\n\
+Supported commands:\n\
+    connect cnn            \t: connect the config named ""cnn""\n\
+    disconnect cnn         \t: disconnect the config named ""cnn""\n\
+    reconnect cnn          \t: reconnect the config named ""cnn""\n\
+    disconnect_all         \t: disconnect all connected configs\n\
+    exit                 \t\t: terminate the running GUI instance (may ask for confirmation)\n\
+    status cnn           \t\t: show the status window of config ""cnn"" if connected\n\
+    silent_connection [0|1]\t: set the silent_connection flag on (1) or off (0)\n\
+    import path          \t\t: Import the config file pointed to by path\n\
+\t\t\tExample: openvpn-gui.exe --command disconnect myconfig\n\
+\n\
+Registry ayarları için:\n\
+--exe_path\t\t: openvpn.exe yolu.\n\
+--config_dir\t\t: Ayar dosyalarının bulunduğu dizini belirtmek için.\n\
+--ext_string\t\t: Config dosyalarının uzantıları.\n\
+--log_dir\t\t\t: Günlük dosyalarının kayıt edileceği dizini belirtmek için.\n\
+--priority_string\t\t: Öncelik belirleme ifadesi (Daha fazla bilgi için install.txt dosyasına bakınız).\n\
+--append_string\t\t: 1=Log dosyasının sonuna ekle. 0=Bağlantı sırasında log dosyasını sil ve üzerine yaz.\n\
+--log_viewer\t\t: Log görüntüleyicinin yolu.\n\
+--editor\t\t\t: Ayar editörünün yolu.\n\
+--show_balloon\t\t: 0=Hiç bir zaman, 1=Bağlantı yapılırken, 2=Bağlantı her yeniden yapıldığında.\n\
+--silent_connection\t\t: 1=Bağlantı sırasında durum diyaloğu görünmesin.\n\
+--show_script_window\t: 0=Betik çalıştırma penceresi görünmesin, 1=Betik çalıştırma penceresi görünsün.\n\
+--connectscript_timeout\t: Bağlantı betiğinin çalışma süresi.\n\
+--disconnectscript_timeout\t: Bağlantı kesme betiğinin çalışma süresi.\n\
+--preconnectscript_timeout\t: Time to wait for preconnect script to finish.\n\
+--iservice_admin\t\t: 0=Do not use interactive service when started as admin (default is 1 for Windows 7 and newer)\n\
+--disable_popup_messages\t: Do not popup (i.e., show) the echo message window. Default is to show.\n\
+--popup_mute_interval\t: Time in hours for which a previously shown echo message is not re-displayed. Default=24 hours.\n\
+--management_port_offset\t: Offset value added to config index to determine the management port for a connection.\n\
+\t\t\t Must be in the range 1 to 61000. Maximum number of configs is limited by 65536 minus this value. Default=25340.\n"
+
+
+    IDS_NFO_USAGECAPTION "模方安全 Kullanımı"
+    IDS_ERR_BAD_PARAMETER " ""%ls"" ifadesini --seçenek parametre olarak ayırmaya çalışıyorum \
+fakat şu ifadeleri göremedim '--'"
+    IDS_ERR_BAD_OPTION "Seçenek hatası: Bilinmeyen bir parametre girişi yaptınız: --%ls\n\
+Daha fazla bilgi için komut satırında openvpn-gui --help ifadesini kullanın."
+
+    /* settings */
+    IDS_SETTINGS_CAPTION "模方安全 - Ayarlar"
+
+    /* proxy */
+    IDS_ERR_HTTP_PROXY_ADDRESS "HTTP proxy adresi girmelisiniz."
+    IDS_ERR_HTTP_PROXY_PORT "HTTP proxy port' u girmelisiniz."
+    IDS_ERR_HTTP_PROXY_PORT_RANGE "1 ila 65535 arasında HTTP proxy port numarası girmelisiniz."
+    IDS_ERR_SOCKS_PROXY_ADDRESS "Bir SOCKS proxy adresi girmelisiniz."
+    IDS_ERR_SOCKS_PROXY_PORT "Bir SOCKS proxy port u girmelisiniz."
+    IDS_ERR_SOCKS_PROXY_PORT_RANGE "1 ila 65535 arasında bir SOCKS proxy port numarası girmelisiniz."
+    IDS_ERR_CREATE_REG_HKCU_KEY """HKEY_CURRENT_USER\\%ls"" anahtarı oluşturulurken hata oluştu."
+
+    /* service */
+    IDS_ERR_QUERY_SERVICE "Servis durumu sorgulaması başarısız oldu."
+    IDS_ERR_WRITE_SERVICE_PIPE "Writing to service pipe failed."
+    IDS_ERR_INSTALL_ISERVICE     """OpenVPNServiceInteractive"" is not installed.\n\
+Tasks requiring administrative access may not work."
+    IDS_ERR_NOTSTARTED_ISERVICE  """OpenVPNServiceInteractive"" is not started.\n\
+Tasks requiring administrative access may not work."
+    IDS_ERR_NOTSTARTED_ISERVICE_ADM  """OpenVPNServiceInteractive"" is not started.\n\
+Wintun driver will not work."
+
+    /* registry */
+    IDS_ERR_GET_WINDOWS_DIR "Windows dizinine erişim başarısız oldu."
+    IDS_ERR_OPEN_REGISTRY "Registry açılamadı(HKLM\\SOFTWARE\\OpenVPN).\n \
+Muhtemelen OpenVPN yüklü değil."
+    IDS_ERR_READING_REGISTRY "Registry anahtarı okunurken başarısız oldu (HKLM\\SOFTWARE\\OpenVPN)."
+    IDS_ERR_DISCONN_SCRIPT_TIMEOUT "Registry anahtarı ""disconnectscript_timeout"" 1 ile 99 arasında bir değer almalı."
+    IDS_ERR_PRECONN_SCRIPT_TIMEOUT "Registry anahtarı ""preconnectscript_timeout"" 1 ile 99 arasında bir değer almalı."
+    IDS_ERR_WRITE_REGVALUE """HKEY_CURRENT_USER\\%ls\\%ls"" anahtarı yazılırken hata oluştu."
+    IDS_ERR_PLAP_REG "Failed to enable Start Before Logon (error = %d)"
+    IDS_ERR_PLAP_UNREG "Failed to disable Start Before Logon (error = %d)"
+
+    /* importation */
+    IDS_ERR_IMPORT_FAILED "Failed to import file. The following path could not be created.\n\n\
+%ls\n\nMake sure you have the right permissions."
+    IDS_NFO_IMPORT_SUCCESS "File imported successfully."
+    IDS_NFO_IMPORT_OVERWRITE "A config named ""%ls"" already exists. Do you want to replace it?"
+    IDS_NFO_IMPORT_SOURCE "Do you want to import the profile <%ls>?"
+    IDS_ERR_IMPORT_SOURCE "<%ls> dosyası, zaten genel veya yerel yapılandırma dizininde olduğu için içe aktarılamıyor"
+    IDS_ERR_IMPORT_ACCESS "<%ls> eksik veya okunamaz olduğu için içe aktarılamıyor"
+
+    /* save/delete password */
+    IDS_NFO_DELETE_PASS """%ls"" yapılandırması için kaydedilmiş şifreleri silmek için Tamam'a basın"
+
+    /* Token password related */
+    IDS_NFO_TOKEN_PASSWORD_CAPTION "模方安全 - Token Şifresi"
+    IDS_NFO_TOKEN_PASSWORD_REQUEST "'%hs' Token için Şifre/PIN Girin"
+
+    IDS_NFO_AUTH_PASS_RETRY "Yanlış kimlik bilgileri. Tekrar deneyin…"
+    IDS_NFO_KEY_PASS_RETRY  "Yanlış şifre. Tekrar deneyin…"
+    IDS_ERR_INVALID_PASSWORD_INPUT "Şifrede geçersiz karakter"
+    IDS_ERR_INVALID_USERNAME_INPUT "Kullanıcı adında geçersiz karakter"
+    IDS_NFO_AUTO_CONNECT    "%u saniye içinde otomatik olarak bağlanılıyor…"
+    IDS_NFO_CLICK_HERE_TO_START "OpenVPN GUI zaten çalışıyor. Başlatmak için sistem tepsisi simgesine sağ tıklayın."
+    IDS_NFO_BYTECOUNT "Gelen bayt: %ls  giden: %ls"
+    IDS_NFO_OTP_PROMPT "OTP veya geçiş kodu girin"
+
+    /* AS profile import */
+    IDS_ERR_URL_IMPORT_PROFILE "URL'den profil alınırken hata: [%d] %ls"
+
+    IDS_ERR_NO_PKCS11 "Sertifika bulunamadı. Bir token'ınız varsa takın ve yeniden deneyin."
+    IDS_ERR_SELECT_PKCS11 "Hiçbir sertifika seçilmedi."
+    /* column headers for pkcs11 certificate list */
+    IDS_CERT_DISPLAYNAME "Şuna verildi"
+    IDS_CERT_ISSUER "Veren"
+    IDS_CERT_NOTAFTER "Geçerlilik süresi"
+
+
+    /* PLAP related */
+    IDS_NFO_STATE_RETRYING "Yeniden Deneniyor"
+    IDS_NFO_STATE_CANCELLING "İptal Ediliyor"
+    IDS_NFO_STATE_DISCONNECTING "Bağlantı Kesiliyor"
+    IDS_NFO_CONN_CANCELLED "Bağlantı kullanıcı tarafından iptal edildi"
+
+    /* openvpn daemon state names -- these are shown on progress dialog in PLAP */
+    IDS_NFO_OVPN_STATE_INITIAL      "Başlatılıyor"
+    IDS_NFO_OVPN_STATE_CONNECTING   "Bağlanıyor"
+    IDS_NFO_OVPN_STATE_ASSIGN_IP    "IP adresi atanıyor"
+    IDS_NFO_OVPN_STATE_ADD_ROUTES   "Rotalar ekleniyor"
+    IDS_NFO_OVPN_STATE_CONNECTED    "Bağlandı"
+    IDS_NFO_OVPN_STATE_RECONNECTING "Yeniden bağlanıyor"
+    IDS_NFO_OVPN_STATE_EXITING      "Çıkılıyor"
+    IDS_NFO_OVPN_STATE_WAIT         "Bekleniyor"
+    IDS_NFO_OVPN_STATE_AUTH         "Kimlik doğrulanıyor"
+    IDS_NFO_OVPN_STATE_GET_CONFIG   "Sunucudan yapılandırma alınıyor"
+    IDS_NFO_OVPN_STATE_RESOLVE      "Uzak ana bilgisayar çözümleniyor"
+    IDS_NFO_OVPN_STATE_TCP_CONNECT  "TCP bağlantısı kuruluyor"
+    IDS_NFO_OVPN_STATE_AUTH_PENDING "Kimlik doğrulama bekliyor"
+    IDS_NFO_OVPN_STATE_UNKNOWN      "?"
+
+END

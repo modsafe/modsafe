@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# 同步前端构建产物到 control 的 go:embed 目录（control/web.go 构建链引用本脚本）
+# 用法：先构建前端（make web-build 或 cd web && npm install && npm run build），再 make build
+set -euo pipefail
+cd "$(dirname "$0")/.."
+if [ ! -d web/dist ]; then
+  echo "error: web/dist 不存在——请先构建前端（cd web && npm install && npm run build）" >&2
+  exit 1
+fi
+rm -rf control/web/dist
+mkdir -p control/web/dist
+cp -r web/dist/. control/web/dist/

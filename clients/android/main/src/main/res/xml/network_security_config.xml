@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- modsafe 域名信任双锚（#134）：opensec.crt=内网直连 180/140 的自签证书；system=公网
+     ac.t.isjue.cn 经阿里云前置终结 TLS 出的 Let's Encrypt 正式证书（*.t.isjue.cn）。
+     NSC 指定自定义锚后系统 CA 默认失效，必须显式并立，公网/内网两条路才都通；
+     LE 续期锚在系统根，不受影响。 -->
+<network-security-config>
+    <domain-config>
+        <domain includeSubdomains="false">192.168.0.180</domain>
+        <domain includeSubdomains="false">192.168.0.140</domain>
+        <domain includeSubdomains="false">ac.t.isjue.cn</domain>
+        <trust-anchors>
+            <certificates src="@raw/opensec" />
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
+</network-security-config>

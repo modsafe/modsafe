@@ -1,0 +1,32 @@
+# 构建产物（不入 git）
+*.exe
+*-linux
+web/dist/
+web/node_modules/
+control/web/dist/*
+!control/web/dist/.gitkeep
+
+# 客户端构建产物与签名密钥（绝不入 git）
+clients/**/.gradle/
+clients/**/.cxx/
+clients/**/.externalNativeBuild/
+clients/**/build/
+clients/**/local.properties
+clients/**/*.keystore
+clients/**/*.jks
+clients/**/hs_err_pid*
+clients/**/.idea/
+
+# 运行时数据（绝不入 git）
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# 审计工具状态目录
+.mimosa/
+
+# 日志与崩溃转储
+hs_err_pid*.log
+*.log

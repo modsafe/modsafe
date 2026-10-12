@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2012-2016 Arne Schwabe
+  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+  -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/stdpadding"
+            android:paddingRight="@dimen/stdpadding">
+
+        <TextView
+                android:id="@+id/notification_permission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/stdpadding"
+                android:drawableStart="@drawable/notifications"
+                android:drawablePadding="@dimen/stdpadding"
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:text="@string/missing_notification_permission" />
+
+        <ListView
+                android:id="@android:id/list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:descendantFocusability="afterDescendants" />
+
+        <!-- ModSafe #125：空态接入引导——按使用频率分层（门户 SSO 主路径 → 扫码 → 文件导入），
+             Apple 语言（胶囊主按钮 + 白卡入口 + 图标底），签名元素=入口卡组 -->
+        <ScrollView
+                android:id="@android:id/empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingTop="48dp"
+                    android:paddingBottom="32dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:contentDescription="@string/app"
+                        android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:text="@string/empty_welcome_title"
+                        android:textColor="#1D1D1F"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/empty_welcome_sub"
+                        android:textColor="#6E6E73"
+                        android:textSize="14sp" />
+
+                <!-- 主行动：门户登录导入（#126：LinearLayout 内 ImageView+TextView 严格垂直居中，
+                     规避 Button drawableStart 不随文字居中 + 系统 Button 叠加自身按压态的问题） -->
+                <LinearLayout
+                        android:id="@+id/btn_center_portal"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="32dp"
+                        android:background="@drawable/bg_ms_primary_btn"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                    <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="@string/portal_login"
+                            android:src="@drawable/ic_ms_portal_menu" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/portal_login"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:text="@string/entry_portal_hint"
+                        android:textColor="#6E6E73"
+                        android:textSize="13sp" />
+
+                <!-- 次行动：扫码导入 -->
+                <LinearLayout
+                        android:id="@+id/btn_center_scan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_ms_entry_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                    <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_ms_icon_tint"
+                            android:contentDescription="@string/menu_scan_import"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_ms_qr" />
+
+                    <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/menu_scan_import"
+                                android:textColor="#1D1D1F"
+                                android:textSize="16sp" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/entry_scan_hint"
+                                android:textColor="#6E6E73"
+                                android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- 第三入口：配置文件导入（原「增加」改名改行为） -->
+                <LinearLayout
+                        android:id="@+id/btn_center_file"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_ms_entry_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
+
+                    <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_ms_icon_tint"
+                            android:contentDescription="@string/file_import_center"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_ms_file" />
+
+                    <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/file_import_center"
+                                android:textColor="#1D1D1F"
+                                android:textSize="16sp" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/entry_file_hint"
+                                android:textColor="#6E6E73"
+                                android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <!-- <include layout="@layout/profile_list_fabs" /> -->
+
+</FrameLayout>

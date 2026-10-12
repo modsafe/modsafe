@@ -1,0 +1,8 @@
+OpenVPN ChangeLog
+Copyright (C) 2002-2026 OpenVPN Inc <sales@openvpn.net>
+
+this marks the start of the 2.8 development cycle
+
+up to the first formal 2.8 pre-release, this file will not be
+maintained - please look at "git log" or "git shortlog v2.7.0..HEAD"
+to see what was changed.

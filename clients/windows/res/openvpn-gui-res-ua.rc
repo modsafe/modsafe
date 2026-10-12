@@ -1,0 +1,540 @@
+/*
+ *  OpenVPN-GUI -- A Windows GUI for OpenVPN.
+ *
+ *  Copyright (C) 2004 Mathias Sundman <mathias@nilings.se>
+ *                2015 http://picku.pp.ua
+ *   This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program (see the file COPYING included with this
+ *  distribution); if not, write to the Free Software Foundation, Inc.,
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/* Passphrase Dialog */
+ID_DLG_PASSPHRASE DIALOGEX 6, 18, 160, 83
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - Пароль ключа"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Введіть пароль:", 201, 6, 6, 100, 10
+    EDITTEXT ID_EDT_PASSPHRASE, 6, 17, 107, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 126, 18, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    CHECKBOX "Запам'ятати", ID_CHK_SAVE_PASS, 6, 33, 100, 10
+    PUSHBUTTON "OK", IDOK, 20, 49, 50, 14
+    PUSHBUTTON "Скасувати", IDCANCEL, 90, 49, 50, 14
+    LTEXT "", ID_TXT_WARNING, 6, 65, 100, 10
+END
+
+/* Auth Username/Password Dialog */
+ID_DLG_AUTH DIALOGEX 6, 18, 200, 95
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Ім'я користувача:", ID_LTEXT_USERNAME, 6, 9, 70, 10
+    LTEXT "Пароль:", ID_LTEXT_PASSWORD, 6, 26, 70, 10
+    EDITTEXT ID_EDT_AUTH_USER, 80, 6, 94, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_AUTH_PASS, 80, 23, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 176, 24, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    CHECKBOX "Запам'ятати", ID_CHK_SAVE_PASS, 6, 42, 100, 10
+    PUSHBUTTON "OK", IDOK, 30, 58, 50, 14, BS_DEFPUSHBUTTON | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON "Скасувати", IDCANCEL, 100, 58, 52, 14
+    LTEXT "", ID_TXT_WARNING, 6, 80, 180, 10
+END
+
+/* Auth Username/Password/Challenge Dialog */
+ID_DLG_AUTH_CHALLENGE DIALOGEX 6, 18, 180, 129
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - Аутентіфикація користувача"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Ім'я користувача:", ID_LTEXT_USERNAME, 6, 9, 50, 10
+    LTEXT "Пароль:", ID_LTEXT_PASSWORD, 6, 26, 50, 10
+    LTEXT "Код відповіді:", ID_LTEXT_RESPONSE, 6, 60, 50, 10
+    EDITTEXT ID_EDT_AUTH_USER, 60, 6, 94, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_AUTH_PASS, 60, 23, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 24, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    LTEXT "", ID_TXT_AUTH_CHALLENGE, 6, 43, 148, 10
+    EDITTEXT ID_EDT_AUTH_CHALLENGE, 60, 57, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    CHECKBOX "Запам'ятати", ID_CHK_SAVE_PASS, 6, 76, 100, 10
+    PUSHBUTTON "OK", IDOK, 20, 92, 50, 14, BS_PUSHBUTTON | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON "Скасувати", IDCANCEL, 90, 92, 52, 14
+    LTEXT "", ID_TXT_WARNING, 6, 108, 180, 10
+END
+
+/* Challenge Response Dialog */
+ID_DLG_CHALLENGE_RESPONSE DIALOGEX 6, 18, 212, 72
+STYLE WS_SIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - Challenge Response"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "", ID_TXT_DESCRIPTION, 6, 9, 400, 20
+    LTEXT "Response:", ID_LTEXT_RESPONSE, 6, 30, 50, 10
+    EDITTEXT ID_EDT_RESPONSE, 60, 27, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 28, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    PUSHBUTTON "OK", IDOK, 20, 51, 50, 14, BS_PUSHBUTTON | WS_TABSTOP
+    PUSHBUTTON "Скасувати", IDCANCEL, 90, 51, 52, 14
+END
+
+/* Status Dialog */
+ID_DLG_STATUS DIALOG 6, 18, 380, 210
+STYLE WS_SIZEBOX | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | DS_CENTER
+CAPTION "模方安全"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Підключення…", ID_TXT_STATUS, 20, 5, 200, 10
+    LTEXT "", ID_TXT_BYTECOUNT, 20, 175, 200, 10
+    LTEXT "OpenVPN GUI 11.y.0.0/2.4.x", ID_TXT_VERSION, 220, 175, 150, 10
+    LTEXT "", ID_TXT_IP, 20, 160, 300, 10
+    PUSHBUTTON "Від'єднати", ID_DISCONNECT, 50, 190, 50, 14
+    PUSHBUTTON "З'єднатися знову", ID_RESTART, 150, 190, 70, 14
+    PUSHBUTTON "De&tach", ID_DETACH, 180, 190, 50, 14, WS_DISABLED
+    PUSHBUTTON "Звернути", ID_HIDE, 100, 190, 50, 14
+END
+
+/* Change Passphrase Dialog */
+ID_DLG_CHGPASS DIALOG 6, 18, 193, 82
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "模方安全 - Зміна паролю"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "Старий пароль:", 171, 6, 9, 85, 10
+    LTEXT "Новий пароль:", 172, 6, 26, 85, 10
+    LTEXT "Підтвердження пароля:", 173, 6, 42, 85, 10
+    EDITTEXT ID_EDT_PASS_CUR, 95, 6, 90, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_PASS_NEW, 95, 23, 90, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_PASS_NEW2, 95, 39, 90, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON "OK", IDOK, 40, 59, 50, 14
+    PUSHBUTTON "Відміна", IDCANCEL, 103, 59, 50, 14
+    LTEXT "", ID_TXT_KEYFORMAT, 0, 0, 0, 0
+    LTEXT "", ID_TXT_KEYFILE, 0, 0, 0, 0
+END
+
+/* Proxy Settings Dialog */
+ID_DLG_PROXY DIALOG 6, 18, 249, 104
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Проксі-сервер"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    GROUPBOX "   ", 201, 6, 46, 235, 52
+    AUTORADIOBUTTON "Використати налаштування з файла конфігурації OpenVPN", ID_RB_PROXY_OPENVPN,
+                    13, 16, 210, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Використати системні налаштування проксі-сервера",
+                    ID_RB_PROXY_MSIE, 13, 31, 200, 10
+    AUTORADIOBUTTON "Налаштування проксі вручну", ID_RB_PROXY_MANUAL, 13, 46, 79, 10
+    AUTORADIOBUTTON "HTTP-проксі", ID_RB_PROXY_HTTP, 20, 62, 90, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "SOCKS-проксі", ID_RB_PROXY_SOCKS, 120, 62, 90, 10
+    LTEXT "Адреса:", ID_TXT_PROXY_ADDRESS, 20, 77, 25, 10
+    RTEXT "Порт:", ID_TXT_PROXY_PORT, 171, 77, 20, 10
+    EDITTEXT ID_EDT_PROXY_ADDRESS, 47, 75, 118, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_PROXY_PORT, 196, 75, 30, 12, ES_AUTOHSCROLL
+END
+
+/* General Settings Dialog */
+ID_DLG_GENERAL DIALOGEX 6, 18, 249, 104
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Загальні налаштування"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    GROUPBOX "Інтерфейс користувача", 201, 6, 12, 235, 30
+    LTEXT "Мова:", ID_TXT_LANGUAGE, 17, 25, 23, 12
+    COMBOBOX ID_CMB_LANGUAGE, 42, 23, 186, 400, CBS_DROPDOWNLIST | WS_TABSTOP
+
+    GROUPBOX "Запуск", 202, 6, 47, 235, 30
+    AUTOCHECKBOX "Запускати при старті Windows", ID_CHK_STARTUP, 17, 59, 200, 12
+
+    GROUPBOX "Налаштування", ID_GROUPBOX3, 6, 82, 235, 180
+    AUTOCHECKBOX "Додати, а не перезаписувати журнал", ID_CHK_LOG_APPEND, 17, 95, 200, 10
+    AUTOCHECKBOX "Показувати вікно виконання", ID_CHK_SHOW_SCRIPT_WIN, 17, 110, 200, 10
+    AUTOCHECKBOX "«Тихе» підключення", ID_CHK_SILENT, 17, 125, 200, 10
+    AUTOCHECKBOX "Завжди використовувати інтерактивний сервіс", ID_CHK_ALWAYS_USE_ISERVICE, 17, 140, 200, 10
+    LTEXT "Відображати спливаюче вікно при:", ID_TXT_BALLOON, 17, 155, 128, 10
+    AUTORADIOBUTTON "Підключенні", ID_RB_BALLOON1, 20, 170, 62, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Під- та перепідключенні", ID_RB_BALLOON2, 85, 170, 100, 10
+    AUTORADIOBUTTON "Ніколи", ID_RB_BALLOON0, 190, 170, 43, 10
+    LTEXT "Persistent Connections", ID_TXT_PERSISTENT, 17, 185, 100, 10
+    AUTORADIOBUTTON "A&uto", ID_RB_BALLOON3, 28, 200, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Manual", ID_RB_BALLOON4, 86, 200, 90, 10
+    AUTORADIOBUTTON "&Disable", ID_RB_BALLOON5, 181, 200, 40, 10
+    AUTOCHECKBOX "Enable Pre-Logon A&ccess Provider (requires admin access)", ID_CHK_PLAP_REG, 17, 215, 200, 10
+    AUTOCHECKBOX "Enable auto restart of active connections", ID_CHK_AUTO_RESTART, 17, 230, 200, 10
+    AUTOCHECKBOX "Prompt for &OTP and combine with password", ID_CHK_CONCAT_OTP, 17, 245, 200, 10
+END
+
+/* Advanced Dialog */
+ID_DLG_ADVANCED DIALOGEX 6, 18, 252, ADVANCED_DIALOG_HEIGHT
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Додаткові"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    GROUPBOX "Файли конфигурації", 201, 6, 12, 235, 45
+    LTEXT "Папка:", ID_TXT_FOLDER, 17, 25, 32, 10
+    LTEXT "Розширення:", ID_TXT_EXTENSION, 17, 40, 52, 10
+    EDITTEXT ID_EDT_CONFIG_DIR, 63, 23, 140, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_CONFIG_EXT, 63, 38, 25, 12, ES_AUTOHSCROLL
+    PUSHBUTTON "…", ID_BTN_CONFIG_DIR, 208, 23, 25, 12
+
+    GROUPBOX "Файли журнала", 202, 6, 62, 235, 30
+    LTEXT "Папка:", ID_TXT_FOLDER1, 17, 74, 32, 10
+    EDITTEXT ID_EDT_LOG_DIR, 63, 72, 140, 12, ES_AUTOHSCROLL
+    PUSHBUTTON "…", ID_BTN_LOG_DIR, 208, 72, 25, 12
+
+    GROUPBOX "Обмеження часу виконання скриптів", 203, 6, 97, 235, 60
+    LTEXT "Тайм-аут Preconnect-скрипта:", ID_TXT_PRECONNECT_TIMEOUT, 17, 110, 160, 10
+    LTEXT "Тайм-аут Connect-скрипта:", ID_TXT_CONNECT_TIMEOUT, 17, 125, 160, 10
+    LTEXT "Тайм-аут Disconnect-скрипта:", ID_TXT_DISCONNECT_TIMEOUT, 17, 140, 160, 10
+    EDITTEXT ID_EDT_PRECONNECT_TIMEOUT, 123, 108, 20, 12, ES_AUTOHSCROLL|ES_NUMBER
+    EDITTEXT ID_EDT_CONNECT_TIMEOUT, 123, 123, 20, 12, ES_AUTOHSCROLL|ES_NUMBER
+    EDITTEXT ID_EDT_DISCONNECT_TIMEOUT, 123, 138, 20, 12, ES_AUTOHSCROLL|ES_NUMBER
+
+    GROUPBOX "Management interface", 204, 6, 163, 235, 30
+    LTEXT "Port offset:", 205, 17, 175, 75, 10
+    EDITTEXT ID_EDT_MGMT_PORT, 103, 173, 30, 12, ES_AUTOHSCROLL
+
+    GROUPBOX "Config menu view", 206, 6, 198, 235, 30
+    AUTORADIOBUTTON "&Auto", ID_RB_BALLOON0, 28, 210, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Flat", ID_RB_BALLOON1, 88, 210, 50, 10
+    AUTORADIOBUTTON "&Nested", ID_RB_BALLOON2, 148, 210, 50, 10
+
+    GROUPBOX "Echo message display", 207, 6, 233, 235, 45
+    AUTORADIOBUTTON "A&uto", ID_RB_BALLOON3, 28, 245, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Ne&ver", ID_RB_BALLOON4, 88, 245, 50, 10
+    LTEXT "Repeated messages are muted for: ", 208, 17, 260, 125, 10
+    EDITTEXT ID_EDT_POPUP_MUTE, 150, 258, 30, 12, ES_AUTOHSCROLL
+    LTEXT "hours", 209, 190, 260, 40, 10
+
+#if ENABLE_OVPN3
+    GROUPBOX "OpenVPN Engine", ID_RB_ENGINE_SELECTION, 6, 283, 235, 30
+    AUTORADIOBUTTON "OpenVPN2", ID_RB_ENGINE_OVPN2, 18, 296, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "OpenVPN3 (experimental)", ID_RB_ENGINE_OVPN3, 76, 296, 100, 10
+#endif
+
+END
+
+/* About Dialog */
+ID_DLG_ABOUT DIALOG 6, 18, 249, 104
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Про программне забеспечення OPENVPN"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    ICON ID_ICO_APP, ID_ICON_ABOUT, 8, 16, 21, 20
+    LTEXT "OpenVPN GUI v%ls - графічний інтерфейс Windows для OpenVPN\n\
+Copyright (C) 2004-2005 Mathias Sundman <info@openvpn.se>\n\
+Copyright (C) 2008-2014 Heiko Hund <heikoh@users.sf.net>\n\
+Copyright (C) 2012-2026 OpenVPN GUI contributors\n", ID_TXT_VERSION, 36, 15, 206, 50
+    LTEXT "https://github.com/OpenVPN/openvpn-gui/", ID_LTEXT_ABOUT2, 36, 55, 206, 42
+    LTEXT "OpenVPN - программне забеспечення, для безпечного тунелювання IP-мереж \
+через єдиний UDP або TCP-порт із підтримкою підтверження достовірності сесій \
+і пересилання(обміном) ключів SSL/TLS, шифруванням, аутентіфікацієй \
+і з компрессією пакетів.\n\
+\n", ID_LTEXT_ABOUT3, 8, 70, 240, 64
+    LTEXT "Copyright (C) 2002-2026 OpenVPN Technologies, Inc <info@openvpn.net>\n\
+With support from - За підтримки - При подддержке http://picku.pp.ua/\n\
+https://openvpn.net/", ID_LTEXT_ABOUT4, 8, 106, 240, 64
+END
+
+/* Proxy Authentication Dialog */
+ID_DLG_PROXY_AUTH DIALOGEX 29, 23, 198, 63
+STYLE DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - Аутентіфикація у проксі-сервері"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    RTEXT "Ім'я користувача:", 201, 8, 8, 66, 10
+    EDITTEXT ID_EDT_PROXY_USER, 78, 7, 94, 12, ES_AUTOHSCROLL
+    RTEXT "Пароль:", 202, 8, 24, 66, 10
+    EDITTEXT ID_EDT_PROXY_PASS, 78, 23, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 174, 24, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    PUSHBUTTON "OK", IDOK, 78, 43, 40, 14, BS_PUSHBUTTON | WS_TABSTOP | WS_DISABLED
+END
+
+/* URL Profile Import Dialog */
+ID_DLG_URL_PROFILE_IMPORT DIALOGEX 6, 18, 249, 95
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER | DS_SETFOREGROUND
+CAPTION "Import Profile from Access Server"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "U&RL:", 201, 6, 9, 50, 10
+    EDITTEXT ID_EDT_URL, 60, 6, 183, 12, ES_AUTOHSCROLL
+    LTEXT "&Username:", 202, 6, 26, 50, 10
+    EDITTEXT ID_EDT_AUTH_USER, 60, 23, 94, 12, ES_AUTOHSCROLL
+    LTEXT "&Password:", ID_LTEXT_PASSWORD, 6, 42, 50, 10
+    EDITTEXT ID_EDT_AUTH_PASS, 60, 40, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 41, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    AUTOCHECKBOX "&Autologin", ID_CHK_AUTOLOGIN, 6, 59, 100, 10
+    PUSHBUTTON "&OK", IDOK, 20, 76, 50, 14, BS_PUSHBUTTON | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON "&Cancel", IDCANCEL, 90, 76, 52, 14
+END
+
+/* Query PKCS11-ID Dialog */
+ID_DLG_PKCS11_QUERY DIALOGEX 6, 18, 340, 242
+STYLE WS_SIZEBOX| WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER | DS_SETFONT
+CAPTION "Select Certificate"
+FONT 8, "Segoe UI"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    LTEXT "PKCS11 Certificates available:", ID_TXT_PKCS11, 17, 12, 171, 12
+    CONTROL "", ID_LVW_PKCS11, "SysListView32", LVS_REPORT | LVS_SINGLESEL | WS_BORDER | WS_TABSTOP, 17, 25, 171,150
+    PUSHBUTTON "&OK", IDOK, 20, 200, 50, 14, BS_DEFPUSHBUTTON | WS_TABSTOP
+    PUSHBUTTON "&Cancel", IDCANCEL, 90, 200, 50, 14, BS_PUSHBUTTON | WS_TABSTOP
+    PUSHBUTTON "&Retry", IDRETRY, 160, 200, 50, 14, BS_PUSHBUTTON | WS_TABSTOP
+    LTEXT "", ID_TXT_WARNING, 6, 222, 190, 10
+END
+
+/* QR code dialog */
+ID_DLG_QR DIALOGEX 0, 0, 10, 10
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "Segoe UI"
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    CONTROL "", ID_STATIC_QR, "Static", SS_BITMAP | WS_VISIBLE | SS_CENTERIMAGE, 0, 0, 10, 10
+    LTEXT "Scan this QR code on your mobile to proceed with authentication.", ID_TXT_QR, 0, 0, 10, 10, SS_CENTER | WS_VISIBLE | SS_EDITCONTROL
+END
+
+STRINGTABLE
+LANGUAGE LANG_UKRAINIAN, SUBLANG_DEFAULT
+BEGIN
+    IDS_LANGUAGE_NAME "Українська - Ukrainian"
+
+    /* Tray - Resources */
+    IDS_TIP_CONNECTED "\nЗ'єднано з узлом: "
+    IDS_TIP_CONNECTING "\nЗ'єднання з: "
+    IDS_TIP_CONNECTED_SINCE "\nЗ'єднано з такого часу: "
+    IDS_TIP_ASSIGNED_IP "\n IP: %ls"
+    IDS_MENU_IMPORT "Import"
+    IDS_MENU_IMPORT_AS "Import from Access Server…"
+    IDS_MENU_IMPORT_URL "Import from URL…"
+    IDS_MENU_IMPORT_FILE "Імпортувати файл…"
+    IDS_MENU_SETTINGS "Конфігурація…"
+    IDS_MENU_CLOSE "Вихід"
+    IDS_MENU_CONNECT "З'єднати"
+    IDS_MENU_DISCONNECT "Завершити з'єднання"
+    IDS_MENU_RECONNECT "Перепідключитись"
+    IDS_MENU_STATUS "Відобразити статус"
+    IDS_MENU_VIEWLOG "Відобразити записи із лог файлу"
+    IDS_MENU_EDITCONFIG "Редагувати конфігурацію"
+    IDS_MENU_CLEARPASS  "Видалити збережені паролі"
+
+    /* Logviewer - Resources */
+    IDS_ERR_START_LOG_VIEWER "Помилка старту переглядача лог файлу: %ls"
+    IDS_ERR_START_CONF_EDITOR "Помилка старту редактора лог файлу: %ls"
+
+    /* OpenVPN */
+    IDS_NFO_NO_CONFIGS "Профілів для підключення (файлів конфігурації) не знайдено.\n\
+Скористайтеся меню ""Імпортувати файл"" або скопіюйте свої конфігураційні файли в ""%ls"" або в ""%ls""."
+    IDS_ERR_CONFIG_NOT_AUTHORIZED "Запуск цього з’єднання (% s) вимагає членства в групі \
+""%ls"". Зверніться до системного адміністратора.\n"
+    IDS_ERR_CONFIG_TRY_AUTHORIZE  "Запуск цього з’єднання (% s) вимагає членства в групі \
+""%ls""\n\n\
+Ви хочете додати себе до цієї групи?\n\
+Ця дія може вимагати пароля адміністратора системи або його згоди (підтвердження)."
+    IDS_NFO_CONFIG_AUTH_PENDING   "Запуск цього з’єднання (%ls) вимагає членства в групі \
+""%ls"".\n\n\
+Будь ласка, заповніть попереднє діалогове вікно авторизації."
+    IDS_ERR_ADD_USER_TO_ADMIN_GROUP "Неможливо додати користувача до групи ""%ls""."
+    IDS_ERR_CREATE_EVENT "Робоча помилка CreateEvent під час завершення %ls"
+    IDS_ERR_UNKNOWN_PRIORITY "Не задане найменування пріорітету: %ls"
+    IDS_ERR_INIT_SEC_DESC "Робоча помилка InitializeSecurityDescriptor."
+    IDS_ERR_SET_SEC_DESC_ACL "Робоча помилка SetSecurityDescriptorDacl."
+    IDS_ERR_DUP_HANDLE_IN_WRITE "Робоча помилка DuplicateHandle, а саме у час hInputWrite."
+    IDS_ERR_CREATE_PROCESS "Робоча помилка CreateProcess, exe='%ls' cmdline='%ls' dir='%ls'"
+    IDS_ERR_CREATE_THREAD_STATUS "Робоча помилка CreateThread, а саме у час відображення вікна статусу."
+    IDS_NFO_STATE_WAIT_TERM "У цей час статус: очікування зупинки роботи OpenVPN…"
+    IDS_NFO_STATE_CONNECTED "У цей час статус: підключено."
+    IDS_NFO_STATE_ONHOLD "Current State: On Hold (disconnected)"
+    IDS_NFO_NOW_CONNECTED "%ls зараз підключено."
+    IDS_NFO_ASSIGN_IP "Отримано IP: %ls"
+    IDS_NFO_STATE_RECONNECTING "Поточний статус: перепідключення"
+    IDS_NFO_STATE_DISCONNECTED "Поточний статус: відключено"
+    IDS_NFO_CONN_TERMINATED "З'єднання з %ls було втрачено."
+    IDS_NFO_STATE_FAILED "Поточний статус: помилка підключення"
+    IDS_NFO_CONN_FAILED "Не вдалось з'єднатися з %ls."
+    IDS_NFO_STATE_FAILED_RECONN "У цей час статус: помилка у час з'єднання знову"
+    IDS_NFO_RECONN_FAILED "Не вдалося з'єднатися з %ls."
+    IDS_NFO_STATE_SUSPENDED "Поточний статус: призупинено"
+    IDS_ERR_READ_STDOUT_PIPE "Помилка отримання із стандартного вводу OpenVPN."
+    IDS_ERR_CREATE_EDIT_LOGWINDOW "Не вдалося зробити RichEdit LogWindow!"
+    IDS_ERR_SET_SIZE "Не вдалося зберегти налаштування розміру (файла)!"
+    IDS_ERR_AUTOSTART_CONF "Не вдалося знайти файл конфігурації для автозапуску, що був заданий: %ls"
+    IDS_ERR_CREATE_PIPE_IN_READ "Не вдалося виконати CreatePipe, а саме у час hInputRead."
+    IDS_NFO_STATE_CONNECTING "У цей час: підключення"
+    IDS_NFO_CONNECTION_XXX "З'єднання OpenVPN (%ls)"
+    IDS_NFO_STATE_CONN_SCRIPT "Поточний статус: старт скрипта підключення"
+    IDS_NFO_STATE_DISCONN_SCRIPT "Поточний статус: старт скрипта відключення"
+    IDS_ERR_RUN_CONN_SCRIPT "Помилка старту скрипта підключення: %ls"
+    IDS_ERR_GET_EXIT_CODE "Помилка отримання коду виходу (ExitCode) скрипта підключення (%ls)"
+    IDS_ERR_CONN_SCRIPT_FAILED "Помилку роботи скрипта підключення. (exitcode=%ld)"
+    IDS_ERR_RUN_CONN_SCRIPT_TIMEOUT "Помилка роботи скрипта підключення. Закінчився час очікування після %d сек."
+    IDS_ERR_CONFIG_EXIST "Вже знайдено файл конфігурації із назвою '%ls'. Ви не маєте можливості \
+використувати кілька файлів конфігурації із однією назвою, навіть якщо \
+вони знаходяться у різних папках одночасно."
+    /* main - Resources */
+    IDS_ERR_OPEN_DEBUG_FILE "Помилка відкриття файлу відладки (%ls) для ."
+    IDS_ERR_CREATE_PATH "Неможливо зробити новий %ls шлях:\n%ls"
+    IDS_ERR_LOAD_RICHED20 "Не вдалося завантижити RICHED20.DLL."
+    IDS_ERR_SHELL_DLL_VERSION "Ваша версія shell32.dll занадто стара (0x%lx). Вам необхідно використовувати, як мінімум, версію файлів 5.0."
+    IDS_NFO_ACTIVE_CONN_EXIT "Ще є активні з'єднання, які будуть зупинені, якщо ви завершите роботу OpenVPN GUI.\
+\n\nВи впевнені, що бажаєте завершити?"
+    IDS_ERR_PARSE_MGMT_OPTION "Could not parse --management option in <%ls%ls>."
+
+    /* options - Resources */
+    IDS_NFO_USAGE "--help\t\t\t: Відобразити це повідомлення.\n\
+--connect cnn \t\t: З'єднатися до ""cnn"" одночасно із запуском сервісу. (із розширенням)\n\
+\t\t\t   Наприклад: openvpn-gui --connect office.ovpn\n\
+--command cmd [args]\t: Надіслати команду запущеному екземпляру графічного інтерфейсу\n\
+Команди, які можна використовувати:\n\
+    connect cnn            \t: підключити конфігурацію з іменем ""cnn""\n\
+    disconnect cnn         \t: відключити конфігурацію з іменем ""cnn""\n\
+    reconnect cnn          \t: повторно підключити конфігурацію з іменем ""cnn""\n\
+    disconnect_all         \t: відключити всі активні з'єднання\n\
+    exit                 \t\t: зупинити запущений екземпляр графічного інтерфейсу (може з'явитись підтвердження)\n\
+    status cnn           \t\t: показати вікно стану конфігурації ""cnn"", якщо з'єднання активне\n\
+    silent_connection [0|1]\t: щоб встановити режим silent_connection, вкажіть (1), Щоб вимкнути, вкажіть (0)\n\
+    import path          \t\t: Import the config file pointed to by path\n\
+\t\t\tНаприклад: openvpn-gui.exe --command disconnect myconfig\n\
+\n\
+Опції спрямовані на переконфігурацію налаштувань реєстру:\n\
+--exe_path\t\t: Розташування openvpn.exe.\n\
+--config_dir\t\t: Адреса папки із файлами конфігурації.\n\
+--ext_string\t\t: Розширення файлов конфігурации.\n\
+--log_dir\t\t\t: Адреса папки із файлами журналу.\n\
+--priority_string\t\t: Рядки пріорітету (Дивиться install.txt у пошуках додаткової інформації).\n\
+--append_string\t\t: 1=Дописати до файлу журналу. 0=Писати із початку файл журналу у час зїєднання.\n\
+--log_viewer\t\t: Адреса до програми перегляду журналу.\n\
+--editor\t\t\t: Адреса редактора конфігурації.\n\
+--show_balloon\t\t: 0=Николи, 1=У перше підключення, 2=При кожному перепідключенні.\n\
+--silent_connection\t\t: 1=Сховати вікно статусу під час підключення.\n\
+--show_script_window\t: 0=Сховати вікно виконання скрипту, 1=Відобразити це вікно.\n\
+--connectscript_timeout\t: Час очікування завершення скрипта підключення.\n\
+--disconnectscript_timeout\t: Час очікування завершення скрипта відключення.\n\
+--preconnectscript_timeout\t: Time to wait for preconnect script to finish.\n\
+--iservice_admin\t\t: 0=Do not use interactive service when started as admin (default is 1 for Windows 7 and newer)\n\
+--disable_popup_messages\t: Do not popup (i.e., show) the echo message window. Default is to show.\n\
+--popup_mute_interval\t: Time in hours for which a previously shown echo message is not re-displayed. Default=24 hours.\n\
+--management_port_offset\t: Offset value added to config index to determine the management port for a connection.\n\
+\t\t\t Must be in the range 1 to 61000. Maximum number of configs is limited by 65536 minus this value. Default=25340.\n"
+
+
+    IDS_NFO_USAGECAPTION "Спроба OpenVPN GUI"
+    IDS_ERR_BAD_PARAMETER "Спроба запуску з ""%ls"" як --опція параметр, \
+але немає зпочатку '--'"
+    IDS_ERR_BAD_OPTION "Помилка опцій: нерозпізнано опції або відсутні параметри: --%ls\n\
+Використувуйте openvpn-gui --help у пошуках дод. інформації."
+
+    /* settings */
+    IDS_SETTINGS_CAPTION "模方安全 - Налаштування"
+
+    /* proxy */
+    IDS_ERR_HTTP_PROXY_ADDRESS "Ви повинні задати адресу HTTP-проксі."
+    IDS_ERR_HTTP_PROXY_PORT "Ви повинні задати порт HTTP-проксі."
+    IDS_ERR_HTTP_PROXY_PORT_RANGE "Ви повинні задати HTTP-проксі із діапазону 1-65535"
+    IDS_ERR_SOCKS_PROXY_ADDRESS "Ви повинні задати адресу SOCKS-проксі."
+    IDS_ERR_SOCKS_PROXY_PORT "Ви повинні задати порт SOCKS-проксі."
+    IDS_ERR_SOCKS_PROXY_PORT_RANGE "Ви повинні задати порт SOCKS-прокси із діапозону 1-65535"
+    IDS_ERR_CREATE_REG_HKCU_KEY "Помилка створення ключів ""HKEY_CURRENT_USER\\%ls""."
+
+    /* service */
+    IDS_ERR_QUERY_SERVICE "Не вдалося з'ясувати статус сервісу."
+    IDS_ERR_WRITE_SERVICE_PIPE "Спроба запису у пайп служби не вдалась."
+    IDS_ERR_INSTALL_ISERVICE     """OpenVPNServiceInteractive"" не встановлен.\n\
+Функціональність, що потребує прав адміністратора, може не працювати."
+    IDS_ERR_NOTSTARTED_ISERVICE  """OpenVPNServiceInteractive"" не запущено.\n\
+Функціональність, що потребує прав адміністратора, може не працювати."
+    IDS_ERR_NOTSTARTED_ISERVICE_ADM  """OpenVPNServiceInteractive"" не запущено.\n\
+Wintun драйвер не буде працювати."
+
+    /* registry */
+    IDS_ERR_GET_WINDOWS_DIR "Помилка отримання розташування ""Windows""."
+    IDS_ERR_OPEN_REGISTRY "Помилка перегляду реестру (HKLM\\SOFTWARE\\OpenVPN).\n \
+OpenVPN, можливо, не встановлений."
+    IDS_ERR_READING_REGISTRY "Помилка перегляду із реестру (HKLM\\SOFTWARE\\OpenVPN)."
+    IDS_ERR_DISCONN_SCRIPT_TIMEOUT "Задана перемінна реестру ""disconnectscript_timeout"" має бути числом із діапазону від 1 до 99."
+    IDS_ERR_PRECONN_SCRIPT_TIMEOUT "Задана перемінна реестру ""preconnectscript_timeout"" має бути числом із діапазону от 1 до 99."
+    IDS_ERR_WRITE_REGVALUE "Помилка запису перемінної реєстру до ""HKEY_CURRENT_USER\\%ls\\%ls""."
+    IDS_ERR_PLAP_REG "Failed to enable Start Before Logon (error = %d)"
+    IDS_ERR_PLAP_UNREG "Failed to disable Start Before Logon (error = %d)"
+
+
+    /* importation */
+    IDS_ERR_IMPORT_FAILED "Помилка імпорту файла. Шлях %ls не може бути створений.\n\n\
+Перевірте, що в вас є необхідні права для цієї операції."
+    IDS_NFO_IMPORT_SUCCESS "Імпорт файла успішно завершено."
+    IDS_NFO_IMPORT_OVERWRITE "Конфігурація з назвою ""%ls"" вже існує. Замінити?"
+    IDS_NFO_IMPORT_SOURCE "Do you want to import the profile <%ls>?"
+    IDS_ERR_IMPORT_SOURCE "Не вдається імпортувати файл <%ls>, оскільки він уже є в глобальному або локальному каталозі конфігурації"
+    IDS_ERR_IMPORT_ACCESS "Cannot import <%ls> as it is missing or not readable"
+
+    /* save/delete password */
+    IDS_NFO_DELETE_PASS "Підтвердіть видалення збережених паролів для ""%ls"""
+
+    /* Token password related */
+    IDS_NFO_TOKEN_PASSWORD_CAPTION "模方安全 - Пароль токену"
+    IDS_NFO_TOKEN_PASSWORD_REQUEST "Введіть пароль/PIN-код токену '%hs'"
+    IDS_NFO_AUTH_PASS_RETRY "Невірне ім'я користувача або пароль"
+    IDS_NFO_KEY_PASS_RETRY "Невірний пароль"
+
+    IDS_ERR_INVALID_PASSWORD_INPUT "Невірний символ у паролі"
+    IDS_ERR_INVALID_USERNAME_INPUT "Невірний символ в імені користувача"
+    IDS_NFO_AUTO_CONNECT    "Автоматичне підключення через %u секунд…"
+    IDS_NFO_CLICK_HERE_TO_START "Графічний інтерфейс OpenVPN вже запущений. Клацніть правою кнопкою мишки на піктограмі OpenVPN в лотку, щоб його запустити."
+    IDS_NFO_BYTECOUNT "Завантажено байт: %ls Передано байт: %ls"
+    IDS_NFO_OTP_PROMPT "Input OTP or passcode"
+
+    /* AS profile import */
+    IDS_ERR_URL_IMPORT_PROFILE "Error fetching profile from URL: [%d] %ls"
+
+    IDS_ERR_NO_PKCS11 "No certificates found. If you have a token insert it and press retry."
+    IDS_ERR_SELECT_PKCS11 "No certificates selected."
+    /* column headers for pkcs11 certificate list */
+    IDS_CERT_DISPLAYNAME "Issued to"
+    IDS_CERT_ISSUER "Issued by"
+    IDS_CERT_NOTAFTER "Valid until"
+
+
+    /* PLAP related */
+    IDS_NFO_STATE_RETRYING "Retrying"
+    IDS_NFO_STATE_CANCELLING "Cancelling"
+    IDS_NFO_STATE_DISCONNECTING "Disconnecting"
+    IDS_NFO_CONN_CANCELLED "Connection cancelled by user"
+
+    /* openvpn daemon state names -- these are shown on progress dialog in PLAP */
+    IDS_NFO_OVPN_STATE_INITIAL      "Initializing"
+    IDS_NFO_OVPN_STATE_CONNECTING   "Connecting"
+    IDS_NFO_OVPN_STATE_ASSIGN_IP    "Assigning IP address"
+    IDS_NFO_OVPN_STATE_ADD_ROUTES   "Adding routes"
+    IDS_NFO_OVPN_STATE_CONNECTED    "Connected"
+    IDS_NFO_OVPN_STATE_RECONNECTING "Reconnecting"
+    IDS_NFO_OVPN_STATE_EXITING      "Exiting"
+    IDS_NFO_OVPN_STATE_WAIT         "Waiting"
+    IDS_NFO_OVPN_STATE_AUTH         "Authenticating"
+    IDS_NFO_OVPN_STATE_GET_CONFIG   "Pulling configuration from server"
+    IDS_NFO_OVPN_STATE_RESOLVE      "Resolving remote host"
+    IDS_NFO_OVPN_STATE_TCP_CONNECT  "Establishing TCP connection"
+    IDS_NFO_OVPN_STATE_AUTH_PENDING "Authentication pending"
+    IDS_NFO_OVPN_STATE_UNKNOWN      "?"
+
+END

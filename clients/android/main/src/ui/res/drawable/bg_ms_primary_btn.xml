@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ModSafe: 空态主按钮背景（胶囊实心 Action Blue）。
+  带 mask 项：ripple 被裁剪进圆角内，按压反馈为 30% 白色渐隐波纹（#126 修正按压色）
+-->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#4DFFFFFF">
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+            <corners android:radius="26dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1D4ED8" />
+            <corners android:radius="26dp" />
+        </shape>
+    </item>
+</ripple>

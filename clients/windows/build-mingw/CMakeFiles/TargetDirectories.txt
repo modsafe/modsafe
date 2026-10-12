@@ -1,0 +1,5 @@
+C:/web/openvpn-2.7.7/openvpn-gui-src/build-mingw/CMakeFiles/openvpn-gui.dir
+C:/web/openvpn-2.7.7/openvpn-gui-src/build-mingw/CMakeFiles/libopenvpn_plap.dir
+C:/web/openvpn-2.7.7/openvpn-gui-src/build-mingw/CMakeFiles/test_plap.dir
+C:/web/openvpn-2.7.7/openvpn-gui-src/build-mingw/CMakeFiles/edit_cache.dir
+C:/web/openvpn-2.7.7/openvpn-gui-src/build-mingw/CMakeFiles/rebuild_cache.dir

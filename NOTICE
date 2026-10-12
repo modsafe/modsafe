@@ -1,0 +1,24 @@
+Modsafe CE
+Copyright 2026 the Modsafe authors
+
+This product includes software developed by the Modsafe project.
+
+Server components are pure Go and depend on third-party libraries under
+MIT / BSD / Apache-2.0 licenses (see go.mod / go.sum in each module).
+A complete THIRD-PARTY-NOTICES file is generated at release time.
+
+Client source code is included in clients/ as forks of their upstream
+projects and remains under the respective upstream licenses:
+
+  clients/android/   fork of OpenVPN for Android (ics-openvpn v0.7.65),
+                     Copyright (C) Arne Schwabe, licensed under the GNU GPL
+                     (see clients/android/doc/LICENSE.txt; remoteExample and
+                     some components are Apache-2.0 as noted there).
+  clients/windows/   fork of OpenVPN GUI, Copyright (C) Mathias Sundman and
+                     the OpenVPN GUI project, licensed under GPLv2
+                     (see clients/windows/COPYING).
+
+The OpenVPN data-plane kernel itself is not part of this repository and
+remains under its upstream license (GPLv2 family, with OpenSSL exception
+where applicable). "OpenVPN" is a trademark of OpenVPN Inc; this project
+uses the name nominatively to indicate compatibility.

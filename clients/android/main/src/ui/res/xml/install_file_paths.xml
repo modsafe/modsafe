@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  P6：应用内升级——androidx FileProvider 仅暴露更新 APK 下载目录（external-files-path）
+-->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-files-path
+            name="update_apk"
+            path="update/" />
+</paths>

@@ -1,0 +1,26 @@
+#pragma once
+
+/* Name of package */
+#define PACKAGE "openvpn-gui"
+
+/* Define to the address where bug reports for this package should be sent. */
+#define PACKAGE_BUGREPORT "openvpn-devel@lists.sourceforge.net"
+
+/* Define to the full name of this package. */
+/* 2026-10-02 modsafe 品牌：VERSIONINFO/窗口标题来源 */
+#define PACKAGE_NAME "模方安全"
+
+/* Define to the one symbol short name of this package. */
+#define PACKAGE_TARNAME "modsafe-gui"
+
+/* Define to the home page for this package. */
+#define PACKAGE_URL "https://github.com/openvpn/openvpn-gui/"
+
+/* Define to the version of this package. */
+#define PACKAGE_VERSION "11"
+
+/* Version in windows resource format */
+#define PACKAGE_VERSION_RESOURCE @GUI_VERSION_MAJOR@, @GUI_VERSION_MINOR@, 0, 0
+
+/* Version as a string */
+#define PACKAGE_VERSION_RESOURCE_STR "@GUI_VERSION_MAJOR@.@GUI_VERSION_MINOR@.0.0"

@@ -1,0 +1,38 @@
+{
+  "name": "modsafe-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "modsec 企业 VPN 管理台前端（§12）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "@ant-design/pro-components": "^2.8.10",
+    "antd": "^5.29.3",
+    "axios": "^1.20.0",
+    "dayjs": "^1.11.23",
+    "echarts": "^5.6.0",
+    "echarts-for-react": "^3.0.6",
+    "qrcode": "^1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6",
+    "zustand": "^4.5.7"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "^5.9.3",
+    "vite": "^5.4.21"
+  },
+  "overrides": {
+    "path-to-regexp": "^8.3.1"
+  }
+}

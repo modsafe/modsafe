@@ -1,0 +1,542 @@
+/*
+ *  OpenVPN-GUI -- A Windows GUI for OpenVPN.
+ *
+ *  Copyright (C) 2004 Mathias Sundman <mathias@nilings.se>
+ *                2009 Heiko Hund <heikoh@users.sf.net>
+ *                2012 Yi-Wen Cheng <u4787521@anu.edu.au>
+ *                2016 Pin-Guang Chen <petercpg@gmail.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program (see the file COPYING included with this
+ *  distribution); if not, write to the Free Software Foundation, Inc.,
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+/* Passphrase Dialog */
+ID_DLG_PASSPHRASE DIALOGEX 6, 18, 160, 83
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    LTEXT "輸入密碼:", 201, 6, 6, 100, 10
+    EDITTEXT ID_EDT_PASSPHRASE, 6, 17, 107, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 126, 18, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    CHECKBOX "儲存密碼", ID_CHK_SAVE_PASS, 6, 33, 100, 10
+    PUSHBUTTON "確認", IDOK, 20, 49, 50, 14
+    PUSHBUTTON "取消", IDCANCEL, 90, 49, 50, 14
+    LTEXT "", ID_TXT_WARNING, 6, 65, 100, 10
+END
+
+/* Auth Username/Password Dialog */
+ID_DLG_AUTH DIALOGEX 6, 18, 180, 95
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    LTEXT "使用者名稱:", ID_LTEXT_USERNAME, 6, 9, 50, 10
+    LTEXT "密碼:", ID_LTEXT_PASSWORD, 6, 26, 50, 10
+    EDITTEXT ID_EDT_AUTH_USER, 60, 6, 94, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_AUTH_PASS, 60, 23, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 24, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    CHECKBOX "儲存密碼", ID_CHK_SAVE_PASS, 6, 42, 100, 10
+    PUSHBUTTON "確認", IDOK, 20, 58, 50, 14, BS_DEFPUSHBUTTON | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON "取消", IDCANCEL, 90, 58, 52, 14
+    LTEXT "", ID_TXT_WARNING, 6, 80, 150, 10
+END
+
+/* Auth Username/Password/Challenge Dialog */
+ID_DLG_AUTH_CHALLENGE DIALOGEX 6, 18, 180, 129
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - 使用者驗證"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    LTEXT "使用者名稱:", ID_LTEXT_USERNAME, 6, 9, 50, 10
+    LTEXT "密碼:", ID_LTEXT_PASSWORD, 6, 26, 50, 10
+    LTEXT "回應:", ID_LTEXT_RESPONSE, 6, 60, 50, 10
+    EDITTEXT ID_EDT_AUTH_USER, 60, 6, 94, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_AUTH_PASS, 60, 23, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 24, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    LTEXT "", ID_TXT_AUTH_CHALLENGE, 6, 43, 148, 10
+    EDITTEXT ID_EDT_AUTH_CHALLENGE, 60, 57, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    CHECKBOX "儲存密碼", ID_CHK_SAVE_PASS, 6, 76, 100, 10
+    PUSHBUTTON "確認", IDOK, 20, 92, 50, 14, BS_PUSHBUTTON | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON "取消", IDCANCEL, 90, 92, 52, 14
+    LTEXT "", ID_TXT_WARNING, 6, 108, 150, 10
+END
+
+/* Challenge Response Dialog */
+ID_DLG_CHALLENGE_RESPONSE DIALOGEX 6, 18, 212, 72
+STYLE WS_SIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER | DS_SETFOREGROUND
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - 挑戰回應"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    LTEXT "", ID_TXT_DESCRIPTION, 6, 9, 400, 20
+    LTEXT "回應:", ID_LTEXT_RESPONSE, 6, 30, 50, 10
+    EDITTEXT ID_EDT_RESPONSE, 60, 27, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 28, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    PUSHBUTTON "確認", IDOK, 20, 51, 50, 14, BS_PUSHBUTTON | WS_TABSTOP
+    PUSHBUTTON "取消", IDCANCEL, 90, 51, 52, 14
+END
+
+/* Status Dialog */
+ID_DLG_STATUS DIALOG 6, 18, 380, 210
+STYLE WS_SIZEBOX | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | DS_CENTER
+CAPTION "模方安全"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    LTEXT "連線中…", ID_TXT_STATUS, 20, 5, 200, 10
+    LTEXT "", ID_TXT_BYTECOUNT, 20, 175, 200, 10
+    LTEXT "OpenVPN GUI 11.y.0.0/2.4.x", ID_TXT_VERSION, 220, 175, 150, 10
+    LTEXT "", ID_TXT_IP, 20, 160, 300, 10
+    PUSHBUTTON "斷線", ID_DISCONNECT, 50, 190, 50, 14
+    PUSHBUTTON "重新連線", ID_RESTART, 150, 190, 50, 14
+    PUSHBUTTON "De&tach", ID_DETACH, 180, 190, 50, 14, WS_DISABLED
+    PUSHBUTTON "隱藏", ID_HIDE, 100, 190, 50, 14
+END
+
+/* Change Passphrase Dialog */
+ID_DLG_CHGPASS DIALOG 6, 18, 193, 82
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "模方安全 - 修改密碼"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    LTEXT "原密碼:", 171, 6, 9, 85, 10
+    LTEXT "新密碼:", 172, 6, 26, 85, 10
+    LTEXT "確認新密碼:", 173, 6, 42, 85, 10
+    EDITTEXT ID_EDT_PASS_CUR, 95, 6, 90, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_PASS_NEW, 95, 23, 90, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_PASS_NEW2, 95, 39, 90, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON "確認", IDOK, 40, 59, 50, 14
+    PUSHBUTTON "取消", IDCANCEL, 103, 59, 50, 14
+    LTEXT "", ID_TXT_KEYFORMAT, 0, 0, 0, 0
+    LTEXT "", ID_TXT_KEYFILE, 0, 0, 0, 0
+END
+
+/* Proxy Settings Dialog */
+ID_DLG_PROXY DIALOG 6, 18, 249, 104
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "Proxy"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    GROUPBOX "   ", 201, 6, 46, 235, 52
+    AUTORADIOBUTTON "使用 OpenVPN 連線設定檔中的設定", ID_RB_PROXY_OPENVPN,
+                    13, 16, 200, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "使用系統 Proxy 設定",
+                    ID_RB_PROXY_MSIE, 13, 31, 200, 10
+    AUTORADIOBUTTON "手動設定", ID_RB_PROXY_MANUAL, 13, 46, 47, 10
+    AUTORADIOBUTTON "HTTP Proxy", ID_RB_PROXY_HTTP, 20, 62, 90, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "SOCKS Proxy", ID_RB_PROXY_SOCKS, 120, 62, 90, 10
+    LTEXT "地址:", ID_TXT_PROXY_ADDRESS, 20, 77, 32, 10
+    RTEXT "通訊埠:", ID_TXT_PROXY_PORT, 163, 77, 28, 10
+    EDITTEXT ID_EDT_PROXY_ADDRESS, 42, 75, 117, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_PROXY_PORT, 196, 75, 30, 12, ES_AUTOHSCROLL
+END
+
+/* General Settings Dialog */
+ID_DLG_GENERAL DIALOGEX 6, 18, 249, 104
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "一般"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    GROUPBOX "使用者介面", 201, 6, 12, 235, 30
+    LTEXT "語言:", ID_TXT_LANGUAGE, 17, 25, 52, 12
+    COMBOBOX ID_CMB_LANGUAGE, 57, 23, 171, 400, CBS_DROPDOWNLIST | WS_TABSTOP
+
+    GROUPBOX "啟動", 202, 6, 47, 235, 30
+    AUTOCHECKBOX "在 Windows 開機時執行", ID_CHK_STARTUP, 17, 59, 200, 12
+
+    GROUPBOX "偏好設定", ID_GROUPBOX3, 6, 82, 235, 180
+    AUTOCHECKBOX "附加記錄檔", ID_CHK_LOG_APPEND, 17, 95, 60, 10
+    AUTOCHECKBOX "顯示指令碼視窗", ID_CHK_SHOW_SCRIPT_WIN, 17, 110, 200, 10
+    AUTOCHECKBOX "寧靜連線", ID_CHK_SILENT, 17, 125, 200, 10
+    AUTOCHECKBOX "Always use interactive service", ID_CHK_ALWAYS_USE_ISERVICE, 17, 140, 200, 10
+    LTEXT "顯示通知氣球", ID_TXT_BALLOON, 17, 155, 100, 10
+    AUTORADIOBUTTON "連上線時", ID_RB_BALLOON1, 28, 170, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "連上線、重新連線時", ID_RB_BALLOON2, 86, 170, 90, 10
+    AUTORADIOBUTTON "永不顯示", ID_RB_BALLOON0, 181, 170, 50, 10
+    LTEXT "Persistent Connections", ID_TXT_PERSISTENT, 17, 185, 100, 10
+    AUTORADIOBUTTON "A&uto", ID_RB_BALLOON3, 28, 200, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Manual", ID_RB_BALLOON4, 86, 200, 90, 10
+    AUTORADIOBUTTON "&Disable", ID_RB_BALLOON5, 181, 200, 40, 10
+    AUTOCHECKBOX "Enable Pre-Logon A&ccess Provider (requires admin access)", ID_CHK_PLAP_REG, 17, 215, 200, 10
+    AUTOCHECKBOX "Enable auto restart of active connections", ID_CHK_AUTO_RESTART, 17, 230, 200, 10
+    AUTOCHECKBOX "Prompt for &OTP and combine with password", ID_CHK_CONCAT_OTP, 17, 245, 200, 10
+END
+
+/* Advanced Dialog */
+ID_DLG_ADVANCED DIALOGEX 6, 18, 252, ADVANCED_DIALOG_HEIGHT
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "進階"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    GROUPBOX "設定檔", 201, 6, 12, 235, 45
+    LTEXT "資料夾:", ID_TXT_FOLDER, 17, 25, 32, 10
+    LTEXT "副檔名:", ID_TXT_EXTENSION, 17, 40, 52, 10
+    EDITTEXT ID_EDT_CONFIG_DIR, 53, 23, 150, 12, ES_AUTOHSCROLL
+    EDITTEXT ID_EDT_CONFIG_EXT, 53, 38, 25, 12, ES_AUTOHSCROLL
+    PUSHBUTTON "…", ID_BTN_CONFIG_DIR, 208, 23, 25, 12
+
+    GROUPBOX "記錄檔", 202, 6, 62, 235, 30
+    LTEXT "資料夾:", ID_TXT_FOLDER1, 17, 74, 32, 10
+    EDITTEXT ID_EDT_LOG_DIR, 53, 72, 150, 12, ES_AUTOHSCROLL
+    PUSHBUTTON "…", ID_BTN_LOG_DIR, 208, 72, 25, 12
+
+    GROUPBOX "指令碼逾時", 203, 6, 97, 235, 60
+    LTEXT "連線前指令碼逾時時限:", ID_TXT_PRECONNECT_TIMEOUT, 17, 110, 100, 10
+    LTEXT "連線指令碼逾時時限:", ID_TXT_CONNECT_TIMEOUT, 17, 125, 90, 10
+    LTEXT "離線指令碼逾時時限:", ID_TXT_DISCONNECT_TIMEOUT, 17, 140, 90, 10
+    EDITTEXT ID_EDT_PRECONNECT_TIMEOUT, 103, 108, 20, 12, ES_AUTOHSCROLL|ES_NUMBER
+    EDITTEXT ID_EDT_CONNECT_TIMEOUT, 103, 123, 20, 12, ES_AUTOHSCROLL|ES_NUMBER
+    EDITTEXT ID_EDT_DISCONNECT_TIMEOUT, 103, 138, 20, 12, ES_AUTOHSCROLL|ES_NUMBER
+
+    GROUPBOX "Management interface", 204, 6, 163, 235, 30
+    LTEXT "Port offset:", 205, 17, 175, 75, 10
+    EDITTEXT ID_EDT_MGMT_PORT, 103, 173, 30, 12, ES_AUTOHSCROLL
+
+    GROUPBOX "Config menu view", 206, 6, 198, 235, 30
+    AUTORADIOBUTTON "&Auto", ID_RB_BALLOON0, 28, 210, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Flat", ID_RB_BALLOON1, 88, 210, 50, 10
+    AUTORADIOBUTTON "&Nested", ID_RB_BALLOON2, 148, 210, 50, 10
+
+    GROUPBOX "Echo message display", 207, 6, 233, 235, 45
+    AUTORADIOBUTTON "A&uto", ID_RB_BALLOON3, 28, 245, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "Ne&ver", ID_RB_BALLOON4, 88, 245, 50, 10
+    LTEXT "Repeated messages are muted for: ", 208, 17, 260, 125, 10
+    EDITTEXT ID_EDT_POPUP_MUTE, 150, 258, 30, 12, ES_AUTOHSCROLL
+    LTEXT "hours", 209, 190, 260, 40, 10
+
+#if ENABLE_OVPN3
+    GROUPBOX "OpenVPN Engine", ID_RB_ENGINE_SELECTION, 6, 283, 235, 30
+    AUTORADIOBUTTON "OpenVPN2", ID_RB_ENGINE_OVPN2, 18, 296, 50, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "OpenVPN3 (experimental)", ID_RB_ENGINE_OVPN3, 76, 296, 100, 10
+#endif
+
+END
+
+/* About Dialog */
+ID_DLG_ABOUT DIALOG 6, 18, 249, 104
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_CENTER
+CAPTION "關於"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    ICON ID_ICO_APP, ID_ICON_ABOUT, 8, 16, 21, 20
+    LTEXT "OpenVPN GUI v%ls - OpenVPN 的 Windows 圖形化介面\n\
+版權所有 (C) 2004-2005 Mathias Sundman <info@openvpn.se>\n\
+版權所有 (C) 2008-2014 Heiko Hund <heikoh@users.sf.net>\n\
+版權所有 (C) 2012-2026 OpenVPN GUI 貢獻者\n", ID_TXT_VERSION, 36, 15, 206, 50
+    LTEXT "https://github.com/OpenVPN/openvpn-gui/", ID_LTEXT_ABOUT2, 36, 55, 206, 42
+    LTEXT "OpenVPN 是一套可安全地透過單一 TCP/UDP 通訊埠穿隧 IP 網路\
+的應用程式。支援以 SSL/TLS 為基礎的連線驗證與金鑰交換\
+、封包加密、封包驗證，以及封包壓縮。\
+\n\
+\n", ID_LTEXT_ABOUT3, 8, 70, 240, 64
+    LTEXT "版權所有 (C) 2002-2026 OpenVPN Technologies, Inc <info@openvpn.net>\n\
+https://openvpn.net/", ID_LTEXT_ABOUT4, 8, 106, 234, 64
+END
+
+/* Proxy Authentication Dialog */
+ID_DLG_PROXY_AUTH DIALOGEX 29, 23, 170, 65
+STYLE DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | DS_CENTER
+EXSTYLE WS_EX_TOPMOST
+CAPTION "模方安全 - Proxy 驗證"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    LTEXT "使用者名稱:", 201, 9, 8, 45, 10
+    EDITTEXT ID_EDT_PROXY_USER, 56, 5, 87, 12, ES_AUTOHSCROLL
+    LTEXT "密碼:", 202, 9, 26, 38, 10
+    EDITTEXT ID_EDT_PROXY_PASS, 56, 23, 87, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 145, 24, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    PUSHBUTTON "確認", IDOK, 58, 43, 40, 14, BS_PUSHBUTTON | WS_TABSTOP | WS_DISABLED
+END
+
+/* URL Profile Import Dialog */
+ID_DLG_URL_PROFILE_IMPORT DIALOGEX 6, 18, 249, 95
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER | DS_SETFOREGROUND
+CAPTION "Import Profile from Access Server"
+FONT 8, "Microsoft Sans Serif"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    LTEXT "U&RL:", 201, 6, 9, 50, 10
+    EDITTEXT ID_EDT_URL, 60, 6, 183, 12, ES_AUTOHSCROLL
+    LTEXT "&Username:", 202, 6, 26, 50, 10
+    EDITTEXT ID_EDT_AUTH_USER, 60, 23, 94, 12, ES_AUTOHSCROLL
+    LTEXT "&Password:", ID_LTEXT_PASSWORD, 6, 42, 50, 10
+    EDITTEXT ID_EDT_AUTH_PASS, 60, 40, 94, 12, ES_PASSWORD | ES_AUTOHSCROLL
+    ICON ID_ICO_EYE, ID_PASSWORD_REVEAL, 156, 41, 14, 14, SS_ICON|SS_NOTIFY|SS_REALSIZEIMAGE
+    AUTOCHECKBOX "&Autologin", ID_CHK_AUTOLOGIN, 6, 59, 100, 10
+    PUSHBUTTON "&OK", IDOK, 20, 76, 50, 14, BS_PUSHBUTTON | WS_TABSTOP | WS_DISABLED
+    PUSHBUTTON "&Cancel", IDCANCEL, 90, 76, 52, 14
+END
+
+/* Query PKCS11-ID Dialog */
+ID_DLG_PKCS11_QUERY DIALOGEX 6, 18, 340, 242
+STYLE WS_SIZEBOX| WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU | DS_CENTER | DS_SETFONT
+CAPTION "Select Certificate"
+FONT 8, "Segoe UI"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    LTEXT "PKCS11 Certificates available:", ID_TXT_PKCS11, 17, 12, 171, 12
+    CONTROL "", ID_LVW_PKCS11, "SysListView32", LVS_REPORT | LVS_SINGLESEL | WS_BORDER | WS_TABSTOP, 17, 25, 171,150
+    PUSHBUTTON "&OK", IDOK, 20, 200, 50, 14, BS_DEFPUSHBUTTON | WS_TABSTOP
+    PUSHBUTTON "&Cancel", IDCANCEL, 90, 200, 50, 14, BS_PUSHBUTTON | WS_TABSTOP
+    PUSHBUTTON "&Retry", IDRETRY, 160, 200, 50, 14, BS_PUSHBUTTON | WS_TABSTOP
+    LTEXT "", ID_TXT_WARNING, 6, 222, 190, 10
+END
+
+/* QR code dialog */
+ID_DLG_QR DIALOGEX 0, 0, 10, 10
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "Segoe UI"
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    CONTROL "", ID_STATIC_QR, "Static", SS_BITMAP | WS_VISIBLE | SS_CENTERIMAGE, 0, 0, 10, 10
+    LTEXT "Scan this QR code on your mobile to proceed with authentication.", ID_TXT_QR, 0, 0, 10, 10, SS_CENTER | WS_VISIBLE | SS_EDITCONTROL
+END
+
+STRINGTABLE
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL
+BEGIN
+    IDS_LANGUAGE_NAME "繁體中文 - Chinese (Traditional)"
+
+    /* Tray - Resources */
+    IDS_TIP_CONNECTED "\n已連線至: "
+    IDS_TIP_CONNECTING "\n正在連線至: "
+    IDS_TIP_CONNECTED_SINCE "\n連線自: "
+    IDS_TIP_ASSIGNED_IP "\n配發 IP: %ls"
+    IDS_MENU_IMPORT "Import"
+    IDS_MENU_IMPORT_AS "Import from Access Server…"
+    IDS_MENU_IMPORT_URL "Import from URL…"
+    IDS_MENU_IMPORT_FILE "匯入設定檔…"
+    IDS_MENU_SETTINGS "選項…"
+    IDS_MENU_CLOSE "離開"
+    IDS_MENU_CONNECT "連線"
+    IDS_MENU_DISCONNECT "斷線"
+    IDS_MENU_RECONNECT "Reconnect"
+    IDS_MENU_STATUS "顯示狀態"
+    IDS_MENU_VIEWLOG "顯示紀錄"
+    IDS_MENU_EDITCONFIG "編輯設定檔"
+    IDS_MENU_CLEARPASS "清除儲存的密碼"
+
+    /* Logviewer - Resources */
+    IDS_ERR_START_LOG_VIEWER "記錄檔檢視器啟動失敗: %ls"
+    IDS_ERR_START_CONF_EDITOR "設定檔編輯器啟動失敗: %ls"
+
+    /* OpenVPN */
+    IDS_NFO_NO_CONFIGS "沒有找到可讀取的連線設定檔。\n\
+請使用選單的「匯入設定檔…」，或將設定檔複製到「%ls」或「%ls」。"
+    IDS_ERR_CONFIG_NOT_AUTHORIZED "啟動此連線 (%ls) 必須要有「%ls」群組的成員資格。\
+請連絡您的系統管理員。\n"
+    IDS_ERR_CONFIG_TRY_AUTHORIZE  "啟動此連線 (%ls) 必須要有「%ls」群組的成員資格。\
+\n\n\
+您想要把自己加入到此群組嗎？\n\
+可能需要輸入管理密碼或管理員同意才能進行此行為。"
+    IDS_NFO_CONFIG_AUTH_PENDING   "啟動此連線 (%ls) 必須要有「%ls」群組的成員資格。\
+\n\n\
+請完成先前的授權對話窗。"
+    IDS_ERR_ADD_USER_TO_ADMIN_GROUP "將使用者加入至「%ls」群組失敗。"
+    IDS_ERR_CREATE_EVENT "發生結束事件時 CreateEvent 失敗: %ls"
+    IDS_ERR_UNKNOWN_PRIORITY "未知的優先權名稱: %ls"
+    IDS_ERR_INIT_SEC_DESC "InitializeSecurityDescriptor 失敗。"
+    IDS_ERR_SET_SEC_DESC_ACL "SetSecurityDescriptorDacl 失敗。"
+    IDS_ERR_DUP_HANDLE_IN_WRITE "DuplicateHandle on hInputWrite 失敗。"
+    IDS_ERR_CREATE_PROCESS "CreateProcess 失敗，exe=「%ls」 cmdline=「%ls」 dir=「%ls」"
+    IDS_ERR_CREATE_THREAD_STATUS "CreateThread 以顯示狀態視窗時失敗。"
+    IDS_NFO_STATE_WAIT_TERM "目前狀態: 等待中止 OpenVPN…"
+    IDS_NFO_STATE_CONNECTED "目前狀態: 已連線"
+    IDS_NFO_STATE_ONHOLD "Current State: On Hold (disconnected)"
+    IDS_NFO_NOW_CONNECTED "已連線至 %ls。"
+    IDS_NFO_ASSIGN_IP "配發 IP: %ls"
+    IDS_NFO_STATE_RECONNECTING "目前狀態: 重新連線中"
+    IDS_NFO_STATE_DISCONNECTED "目前狀態: 已斷線"
+    IDS_NFO_CONN_TERMINATED "%ls 連線已中斷。"
+    IDS_NFO_STATE_FAILED "目前狀態: 連線失敗"
+    IDS_NFO_CONN_FAILED "%ls 連線失敗。"
+    IDS_NFO_STATE_FAILED_RECONN "目前狀態: 重新連線失敗"
+    IDS_NFO_RECONN_FAILED "%ls 重新連線失敗。"
+    IDS_NFO_STATE_SUSPENDED "目前狀態: 已暫停"
+    IDS_ERR_READ_STDOUT_PIPE "無法從 OpenVPN StdOut 管道讀取。"
+    IDS_ERR_CREATE_EDIT_LOGWINDOW "建立 RichEdit 紀錄視窗失敗！"
+    IDS_ERR_SET_SIZE "設定大小失敗！"
+    IDS_ERR_AUTOSTART_CONF "無法找到指定的自動連線設定檔: %ls"
+    IDS_ERR_CREATE_PIPE_IN_READ "CreatePipe on hInputRead 失敗。"
+    IDS_NFO_STATE_CONNECTING "目前狀態: 連線中"
+    IDS_NFO_CONNECTION_XXX "OpenVPN 連線 (%ls)"
+    IDS_NFO_STATE_CONN_SCRIPT "目前狀態: 正在執行連線指令碼"
+    IDS_NFO_STATE_DISCONN_SCRIPT "目前狀態: 正在執行斷線指令碼"
+    IDS_ERR_RUN_CONN_SCRIPT "執行連線指令碼時發生錯誤: %ls"
+    IDS_ERR_GET_EXIT_CODE "無法取得連線指令碼的 ExitCode (%ls)"
+    IDS_ERR_CONN_SCRIPT_FAILED "連線指令碼執行失敗。（退出碼為 %ld）"
+    IDS_ERR_RUN_CONN_SCRIPT_TIMEOUT "連線指令碼執行失敗，執行超過 %d 已逾時。"
+    IDS_ERR_CONFIG_EXIST "已有名為「%ls」的連線設定檔。即使連線設定檔存在不同資料夾，\
+您也不得使用相同名稱。"
+    IDS_NFO_CONN_TIMEOUT "連限至管理介面失敗。\n\
+請檢視記錄檔 (%ls) 取得更多詳細資訊。"
+    /* main - Resources */
+    IDS_ERR_OPEN_DEBUG_FILE "開啟除錯文件 (%ls) 時失敗。"
+    IDS_ERR_CREATE_PATH "無法建立 %ls 路徑:\n%ls"
+    IDS_ERR_LOAD_RICHED20 "無法載入 RICHED20.DLL。"
+    IDS_ERR_SHELL_DLL_VERSION "您的 shell32.dll 版本太舊 (0x%lx)，需要至少 5.0 版本或更新版。"
+    IDS_NFO_ACTIVE_CONN_EXIT "目前還有進行中的連線，若您結束 OpenVPN GUI 該連線將被中斷。\
+\n\n您確定要離開嗎？"
+    IDS_ERR_PARSE_MGMT_OPTION "Could not parse --management option in <%ls%ls>."
+
+    /* options - Resources */
+    IDS_NFO_USAGE "--help\t\t\t: 顯示此訊息。\n\
+--connect cnn \t\t: 啟動時連線至 ""cnn""。\n\
+\t\t\t   舉例: openvpn-gui --connect office.ovpn\n\
+--command cmd [args]\t: Send a command to a running instance of the GUI\n\
+Supported commands:\n\
+    connect cnn            \t: connect the config named ""cnn""\n\
+    disconnect cnn         \t: disconnect the config named ""cnn""\n\
+    reconnect cnn          \t: reconnect the config named ""cnn""\n\
+    disconnect_all         \t: disconnect all connected configs\n\
+    exit                 \t\t: terminate the running GUI instance (may ask for confirmation)\n\
+    status cnn           \t\t: show the status window of config ""cnn"" if connected\n\
+    silent_connection [0|1]\t: set the silent_connection flag on (1) or off (0)\n\
+    import path          \t\t: Import the config file pointed to by path\n\
+\t\t\tExample: openvpn-gui.exe --command disconnect myconfig\n\
+\n\
+可覆蓋系統登錄表設定的選項:\n\
+--exe_path\t\t: openvpn.exe 的路徑。\n\
+--config_dir\t\t: 要搜尋連線設定檔的資料夾路徑。\n\
+--ext_string\t\t: 連線設定檔的副檔名。\n\
+--log_dir\t\t\t: 儲存記錄檔的資料夾路徑。\n\
+--priority_string\t\t: 優先權字串（請參考 install.txt 取得更多訊息）。\n\
+--append_string\t\t: 1=追加到現有記錄檔、0=連線時清空記錄。\n\
+--log_viewer\t\t: 記錄檔檢視器路徑。\n\
+--editor\t\t\t: 連線設定檔編輯器路徑。\n\
+--show_balloon\t\t: 0=永不、1=首次連線時、2=每次重新連線時顯示通知氣球。\n\
+--silent_connection\t\t: 1=連線時，不顯示狀態視窗。\n\
+--show_script_window\t: 0=隱藏指令碼執行視窗、1=顯示。\n\
+--connectscript_timeout\t: 等待連線指令碼執行的時限。\n\
+--disconnectscript_timeout\t: 等待斷線指令碼執行的時限。\n\
+--preconnectscript_timeout\t: Time to wait for preconnect script to finish.\n\
+--iservice_admin\t\t: 0=Do not use interactive service when started as admin (default is 1 for Windows 7 and newer)\n\
+--disable_popup_messages\t: Do not popup (i.e., show) the echo message window. Default is to show.\n\
+--popup_mute_interval\t: Time in hours for which a previously shown echo message is not re-displayed. Default=24 hours.\n\
+--management_port_offset\t: Offset value added to config index to determine the management port for a connection.\n\
+\t\t\t Must be in the range 1 to 61000. Maximum number of configs is limited by 65536 minus this value. Default=25340.\n"
+
+
+    IDS_NFO_USAGECAPTION "模方安全 使用方式"
+    IDS_ERR_BAD_PARAMETER "嘗試將「%ls」剖析成 --option 的參數，\
+但沒看到參數前面的「--」"
+    IDS_ERR_BAD_OPTION "選項錯誤: 無法識別選項，或缺少參數: --%ls\n\
+使用 openvpn-gui --help 取得更多資訊。"
+
+    /* settings */
+    IDS_SETTINGS_CAPTION "模方安全 - 設定"
+
+    /* proxy */
+    IDS_ERR_HTTP_PROXY_ADDRESS "您必須指定 HTTP Proxy 地址。"
+    IDS_ERR_HTTP_PROXY_PORT "您必須指定 HTTP Proxy 通訊埠。"
+    IDS_ERR_HTTP_PROXY_PORT_RANGE "您必須指定在 1-65535 之間的 HTTP Proxy 通訊埠"
+    IDS_ERR_SOCKS_PROXY_ADDRESS "您必須指定 SOCKS Proxy 地址。"
+    IDS_ERR_SOCKS_PROXY_PORT "您必須指定 SOCKS Proxy 通訊埠。"
+    IDS_ERR_SOCKS_PROXY_PORT_RANGE "您必須指定在 1-65535 之間的 SOCKS Proxy 通訊埠"
+    IDS_ERR_CREATE_REG_HKCU_KEY "「HKEY_CURRENT_USER\\%ls」登錄機碼建立失敗。"
+
+    /* service */
+    IDS_ERR_QUERY_SERVICE "無法查詢服務狀態。"
+    IDS_ERR_WRITE_SERVICE_PIPE "服務管道寫入失敗。"
+    IDS_ERR_INSTALL_ISERVICE     "未安裝「OpenVPNServiceInteractive」。\n\
+需要管理員權限的任務可能無法正常執行。"
+    IDS_ERR_NOTSTARTED_ISERVICE  "未啟動「OpenVPNServiceInteractive」。\n\
+需要管理員權限的任務可能無法正常執行。"
+    IDS_ERR_NOTSTARTED_ISERVICE_ADM  "未啟動「OpenVPNServiceInteractive」。\n\
+Wintun driver will not work."
+
+    /* registry */
+    IDS_ERR_GET_WINDOWS_DIR "取得 Windows 目錄時發生錯誤。"
+    IDS_ERR_OPEN_REGISTRY "無法讀取系統登錄檔 (HKLM\\SOFTWARE\\OpenVPN)。\n \
+可能尚未安裝 OpenVPN"
+    IDS_ERR_READING_REGISTRY "讀取系統登錄檔 (HKLM\\SOFTWARE\\OpenVPN) 時發生錯誤。"
+    IDS_ERR_DISCONN_SCRIPT_TIMEOUT "系統登錄值「disconnectscript_timeout」必須為 1 到 99 之間的數字。"
+    IDS_ERR_PRECONN_SCRIPT_TIMEOUT "系統登錄值「preconnectscript_timeout」必須為 1 到 99 之間的數字。"
+    IDS_ERR_WRITE_REGVALUE "讀取系統登錄值「HKEY_CURRENT_USER\\%ls\\%ls」時發生錯誤。"
+    IDS_ERR_PLAP_REG "Failed to enable Start Before Logon (error = %d)"
+    IDS_ERR_PLAP_UNREG "Failed to disable Start Before Logon (error = %d)"
+
+    /* importation */
+    IDS_ERR_IMPORT_FAILED "檔案匯入失敗。無法建立下列路徑。\n\n\
+%ls\n\n請確定您有正確的系統權限。"
+    IDS_NFO_IMPORT_SUCCESS "已成功匯入檔案。"
+    IDS_NFO_IMPORT_OVERWRITE "A config named ""%ls"" already exists. Do you want to replace it?"
+    IDS_NFO_IMPORT_SOURCE "Do you want to import the profile <%ls>?"
+    IDS_ERR_IMPORT_SOURCE "Cannot import file <%ls> as it is already in the global or local config directory"
+    IDS_ERR_IMPORT_ACCESS "Cannot import <%ls> as it is missing or not readable"
+
+    /* save/delete password */
+    IDS_NFO_DELETE_PASS "請按「確定」刪除「%ls」連線設定檔的已存密碼。"
+
+    /* Token password related */
+    IDS_NFO_TOKEN_PASSWORD_CAPTION "模方安全 - Token 密碼"
+    IDS_NFO_TOKEN_PASSWORD_REQUEST "請輸入 Token「%hs」的密碼或 PIN"
+
+    IDS_NFO_AUTH_PASS_RETRY "Wrong credentials. Try again…"
+    IDS_NFO_KEY_PASS_RETRY  "Wrong password. Try again…"
+    IDS_ERR_INVALID_PASSWORD_INPUT "Invalid character in password"
+    IDS_ERR_INVALID_USERNAME_INPUT "Invalid character in username"
+    IDS_NFO_AUTO_CONNECT    "Connecting automatically in %u seconds…"
+    IDS_NFO_CLICK_HERE_TO_START "OpenVPN GUI is already running. Right click on the tray icon to start."
+    IDS_NFO_BYTECOUNT "Bytes in: %ls  out: %ls"
+    IDS_NFO_OTP_PROMPT "Input OTP or passcode"
+
+    /* AS profile import */
+    IDS_ERR_URL_IMPORT_PROFILE "Error fetching profile from URL: [%d] %ls"
+
+    IDS_ERR_NO_PKCS11 "No certificates found. If you have a token insert it and press retry."
+    IDS_ERR_SELECT_PKCS11 "No certificates selected."
+    /* column headers for pkcs11 certificate list */
+    IDS_CERT_DISPLAYNAME "Issued to"
+    IDS_CERT_ISSUER "Issued by"
+    IDS_CERT_NOTAFTER "Valid until"
+
+
+    /* PLAP related */
+    IDS_NFO_STATE_RETRYING "Retrying"
+    IDS_NFO_STATE_CANCELLING "Cancelling"
+    IDS_NFO_STATE_DISCONNECTING "Disconnecting"
+    IDS_NFO_CONN_CANCELLED "Connection cancelled by user"
+
+    /* openvpn daemon state names -- these are shown on progress dialog in PLAP */
+    IDS_NFO_OVPN_STATE_INITIAL      "Initializing"
+    IDS_NFO_OVPN_STATE_CONNECTING   "Connecting"
+    IDS_NFO_OVPN_STATE_ASSIGN_IP    "Assigning IP address"
+    IDS_NFO_OVPN_STATE_ADD_ROUTES   "Adding routes"
+    IDS_NFO_OVPN_STATE_CONNECTED    "Connected"
+    IDS_NFO_OVPN_STATE_RECONNECTING "Reconnecting"
+    IDS_NFO_OVPN_STATE_EXITING      "Exiting"
+    IDS_NFO_OVPN_STATE_WAIT         "Waiting"
+    IDS_NFO_OVPN_STATE_AUTH         "Authenticating"
+    IDS_NFO_OVPN_STATE_GET_CONFIG   "Pulling configuration from server"
+    IDS_NFO_OVPN_STATE_RESOLVE      "Resolving remote host"
+    IDS_NFO_OVPN_STATE_TCP_CONNECT  "Establishing TCP connection"
+    IDS_NFO_OVPN_STATE_AUTH_PENDING "Authentication pending"
+    IDS_NFO_OVPN_STATE_UNKNOWN      "?"
+
+END

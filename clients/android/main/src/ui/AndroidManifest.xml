@@ -1,0 +1,245 @@
+<!--
+  ~ Copyright (c) 2012-2019 Arne Schwabe
+  ~ Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+            android:name="android.software.leanback"
+            android:required="false" />
+    <uses-feature
+            android:name="android.hardware.touchscreen"
+            android:required="false" />
+
+    <!-- This library wants SDK version 23 but we do runtime checks to not use it before
+        API 23 -->
+    <uses-sdk tools:overrideLibrary="androidx.security"/>
+
+    <application android:banner="@mipmap/banner_tv">
+        <activity
+                android:exported="true"
+                android:name=".activities.MainActivity"
+                tools:ignore="ExportedActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="openvpn" />
+                <data android:host="import-profile" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".activities.CredentialsPopup"
+                android:theme="@style/blinkt.dialog" />
+
+
+        <activity
+                android:name=".activities.LogWindow"
+                android:allowTaskReparenting="true"
+                android:label="@string/openvpn_log"
+                android:launchMode="singleTask" />
+
+        <activity
+                android:name=".activities.VPNPreferences"
+                android:exported="false"
+                android:windowSoftInputMode="stateHidden" />
+
+        <activity android:name=".activities.FileSelect" />
+
+        <!-- P1：App 内扫码导入（modsafe 二维码 → 下载 → 导入 → 自动连接）
+             P5：门户深链回跳——浏览器 IM SSO 后 modsafe://setup 进入本页（内部白名单硬校验后才发请求） -->
+        <activity
+                android:name=".activities.QrImportActivity"
+                android:exported="true"
+                android:label="@string/qr_import_title">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="modsafe" android:host="setup" />
+            </intent-filter>
+        </activity>
+
+        <!-- P7（#135）：扫码取景随设备自适应——zxing 库 CaptureActivity 在库 manifest 里锁了
+             sensorLandscape，仅 setOrientationLocked(false) 不够，必须在此覆盖 screenOrientation -->
+        <activity
+                android:name="com.journeyapps.barcodescanner.CaptureActivity"
+                android:screenOrientation="fullSensor"
+                tools:replace="android:screenOrientation" />
+
+        <!-- P10（#140）：浏览器认证成功页自动返回 App——oa2 成功页 JS 跳 modsafe://auth-complete
+             → 本透明跳板带回应用任务栈后立即 finish；App 被杀时先拉主界面 -->
+        <activity
+                android:name=".activities.AuthReturnActivity"
+                android:exported="true"
+                android:theme="@style/ModsafeAuthReturn"
+                android:excludeFromRecents="true"
+                android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="modsafe" android:host="auth-complete" />
+            </intent-filter>
+        </activity>
+
+        <!-- P2：WEB_AUTH 内嵌容器（OpenVPNService 经隐式 action 启动，main 层不依赖 ui 类） -->
+        <activity
+                android:name=".activities.ModsafeAuthActivity"
+                android:exported="false"
+                android:configChanges="orientation|screenSize|keyboardHidden">
+            <intent-filter>
+                <action android:name="de.blinkt.openvpn.MODSAFE_AUTH" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <service
+                android:exported="true"
+                android:name=".OpenVPNTileService"
+                android:icon="@drawable/ic_quick"
+                android:label="@string/qs_title"
+                android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+                android:value="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.service.quicksettings.ACTIVE_TILE"
+                    android:value="false" />
+        </service>
+        <activity
+                android:name=".activities.ConfigConverter"
+                android:exported="true"
+                android:excludeFromRecents="true"
+                android:label="Convert Config File"
+                android:taskAffinity=".ConfigConverter"
+                android:uiOptions="splitActionBarWhenNarrow"
+                tools:ignore="ExportedActivity">
+            <intent-filter
+                    android:label="@string/import_config"
+                    tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="application/x-openvpn-profile" />
+            </intent-filter>
+            <intent-filter
+                    android:label="@string/import_config"
+                    tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:mimeType="application/ovpn" />
+            </intent-filter>
+            <intent-filter android:label="@string/import_config">
+
+                <!-- http://stackoverflow.com/questions/7f030832/associating-certain-file-extension-to-my-android-application/7102838#7102838 -->
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
+                <data android:scheme="content" />
+                <data android:host="*" />
+                <data android:pathPattern=".*..*..*..*..*.ovpn" />
+                <data android:pathPattern=".*..*..*..*.ovpn" />
+                <data android:pathPattern=".*..*..*.ovpn" />
+                <data android:pathPattern=".*..*.ovpn" />
+                <data android:pathPattern=".*.ovpn" />
+            </intent-filter>
+        </activity> <!-- https://commonsware.com/blog/2019/03/27/death-external-storage-stay-away-files.html -->
+        <activity-alias
+                android:exported="true"
+                android:name=".activities.ConfigConverterFile"
+                android:enabled="@bool/supportFileScheme"
+                android:targetActivity=".activities.ConfigConverter">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathPattern=".*..*..*..*..*.ovpn" />
+                <data android:pathPattern=".*..*..*..*.ovpn" />
+                <data android:pathPattern=".*..*..*.ovpn" />
+                <data android:pathPattern=".*..*.ovpn" />
+                <data android:pathPattern=".*.ovpn" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+                android:exported="true"
+                android:name=".activities.CreateShortcuts"
+                android:excludeFromRecents="true"
+                android:label="@string/vpn_shortcut"
+                android:taskAffinity=".CreateShortcuts"
+                android:theme="@android:style/Theme.DeviceDefault.Light.DialogWhenLarge">
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:exported="false"
+                android:name=".activities.OpenSSLSpeed"
+                android:label="@string/title_activity_open_sslspeed"
+                android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="de.blinkt.openvpn.activities.MainActivity" />
+        </activity>
+
+
+        <provider
+                android:name=".FileProvider"
+                android:authorities="${applicationId}.FileProvider"
+                android:exported="true"
+                android:grantUriPermissions="true"
+                tools:ignore="ExportedContentProvider" />
+
+        <!-- P6：应用内升级——API<26 安装回退用的 androidx FileProvider（只读 update/ 目录） -->
+        <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="${applicationId}.InstallFileProvider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/install_file_paths" />
+        </provider>
+
+        <!-- P6：PackageInstaller commit 回调（拉起系统安装确认页） -->
+        <receiver
+                android:name=".activities.AppInstallReceiver"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="de.blinkt.openvpn.INSTALL_COMMIT" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

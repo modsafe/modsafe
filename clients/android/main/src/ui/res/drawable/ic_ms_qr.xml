@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ModSafe: 扫码导入图标（取景框 + 码点）
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#12307A"
+        android:pathData="M4,4h6v2H6v4H4V4zM14,4h6v6h-2V6h-4V4zM4,14h2v4h4v2H4V14zM18,14h2v6h-6v-2h4V14z" />
+    <path
+        android:fillColor="#12307A"
+        android:pathData="M8.5,8.5h3v3h-3zM12.5,8.5h3v3h-3zM8.5,12.5h3v3h-3zM12.5,12.5h3v3h-3z" />
+</vector>
