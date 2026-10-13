@@ -26,6 +26,12 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Modsafe: 首启配置门户域名（未配置则弹全屏对话框，配置前门户功能拒绝服务）
+        if (!de.blinkt.openvpn.core.PortalConfig.isConfigured(this)) {
+            de.blinkt.openvpn.fragments.PortalSetupDialog().show(supportFragmentManager, "portal_setup")
+        }
+
         val view = layoutInflater.inflate(R.layout.main_activity, null)
 
         // Instantiate a ViewPager and a PagerAdapter.

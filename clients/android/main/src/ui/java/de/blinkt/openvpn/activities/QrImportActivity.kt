@@ -86,7 +86,7 @@ class QrImportActivity : BaseActivity() {
         val path = uri.path ?: ""
         val name = uri.getQueryParameter("name") ?: ""
         // ADR-3：仅允许 modsafe 下载域，路径必须命中一次性下载端点，name 白名单与 launcher nameRe 同口径
-        if (uri.scheme != "https" || host !in ALLOWED_HOSTS ||
+        if (uri.scheme != "https" || host !in allowedHosts(this) ||
             !path.startsWith("/api/v1/client-config/") || !NAME_RE.matcher(name).matches()
         ) {
             fail(getString(R.string.qr_bad_source))
@@ -107,7 +107,7 @@ class QrImportActivity : BaseActivity() {
         val base = uri.getQueryParameter("base") ?: ""
         val name = uri.getQueryParameter("name") ?: ""
         val b = Uri.parse(base)
-        if (b.scheme != "https" || (b.host ?: "") !in ALLOWED_HOSTS ||
+        if (b.scheme != "https" || (b.host ?: "") !in allowedHosts(this) ||
             !TOKEN_RE.matcher(token).matches() || !NAME_RE.matcher(name).matches()
         ) {
             fail(getString(R.string.qr_bad_source))
@@ -209,8 +209,9 @@ class QrImportActivity : BaseActivity() {
         ProfileManager.getInstance(this).getProfiles().any { !it.profileDeleted }
 
     companion object {
-        // ADR-3：二维码域名白名单（随门户入口扩展；禁止任意 URL 投毒配置）
-        private val ALLOWED_HOSTS = setOf("192.168.0.180", "ac.t.isjue.cn", "192.168.0.140")
+        // ADR-3：二维码域名白名单（首启配置的门户域名；未配置=空集=全拒绝，禁止任意 URL 投毒配置）
+        private fun allowedHosts(context: android.content.Context): Set<String> =
+            de.blinkt.openvpn.core.PortalConfig.allowedHosts(context)
         private val NAME_RE = Pattern.compile("^[A-Za-z0-9_.-]{1,64}$")
         // P5：一次性下载 token（服务端生成的路径段，收紧字符集防路径注入）
         private val TOKEN_RE = Pattern.compile("^[A-Za-z0-9._-]{1,128}$")

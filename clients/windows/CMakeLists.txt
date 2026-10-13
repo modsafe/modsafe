@@ -18,6 +18,7 @@ add_executable(${PROJECT_NAME} WIN32
     proxy.c
     registry.c
     save_pass.c
+    portal_config.c
     scripts.c
     service.c
     tray.c

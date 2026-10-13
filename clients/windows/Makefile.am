@@ -97,6 +97,7 @@ openvpn_gui_SOURCES = \
 	options.c options.h \
 	proxy.c proxy.h \
 	registry.c registry.h \
+	portal_config.c \
 	scripts.c scripts.h \
 	manage.c manage.h \
 	misc.c misc.h \

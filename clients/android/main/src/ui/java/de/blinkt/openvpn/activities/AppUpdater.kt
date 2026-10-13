@@ -37,8 +37,9 @@ object AppUpdater {
     private const val FEED_PATH = "/launcher/modsafe-android.json"
     private const val PREF_LAST_CHECK = "lastUpdateCheckAt"
     private const val CHECK_INTERVAL_MS = 6 * 3600 * 1000L
-    // 与 QrImportActivity ALLOWED_HOSTS 同口径：仅门户域（含内网入口）可下发升级
-    private val ALLOWED_HOSTS = setOf("ac.t.isjue.cn", "192.168.0.180", "192.168.0.140")
+    // 与 QrImportActivity 同口径：仅首启配置的门户域名可下发升级（未配置=空集=全拒绝）
+    private fun allowedHosts(context: android.content.Context): Set<String> =
+        de.blinkt.openvpn.core.PortalConfig.allowedHosts(context)
 
     private class Latest(
         val versionCode: Int,
@@ -54,7 +55,7 @@ object AppUpdater {
         if (!force && System.currentTimeMillis() - last < CHECK_INTERVAL_MS) return
         prefs.edit().putLong(PREF_LAST_CHECK, System.currentTimeMillis()).apply()
 
-        val feedUrl = activity.getString(R.string.portal_url) + FEED_PATH
+        val feedUrl = de.blinkt.openvpn.core.PortalConfig.getPortalUrl(activity) + FEED_PATH
         Thread {
             try {
                 val latest = fetchFeed(feedUrl)
@@ -79,7 +80,7 @@ object AppUpdater {
     private fun fetchFeed(feedUrl: String): Latest {
         val uri = Uri.parse(feedUrl)
         // 白名单域 + https + 固定路径，防任意源下发升级（同 deep link 校验口径）
-        if (uri.scheme != "https" || (uri.host ?: "") !in ALLOWED_HOSTS) {
+        if (uri.scheme != "https" || (uri.host ?: "") !in allowedHosts(activity)) {
             throw IllegalStateException("untrusted feed source")
         }
         val client = OkHttpClient.Builder()
@@ -91,7 +92,7 @@ object AppUpdater {
             val obj = JSONObject(resp.body?.string() ?: throw IllegalStateException("empty feed"))
             val url = obj.optString("url")
             val u = Uri.parse(url)
-            if (u.scheme != "https" || (u.host ?: "") !in ALLOWED_HOSTS || !(u.path ?: "").startsWith("/launcher/")) {
+            if (u.scheme != "https" || (u.host ?: "") !in allowedHosts(activity) || !(u.path ?: "").startsWith("/launcher/")) {
                 throw IllegalStateException("untrusted apk url")
             }
             return Latest(

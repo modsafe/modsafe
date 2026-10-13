@@ -42,6 +42,9 @@
 #include "main.h"
 #include "options.h"
 #include "proxy.h"
+
+/* Modsafe: 首启门户域名配置（portal_config.c） */
+extern BOOL EnsurePortalConfigured(void);
 #include "registry.h"
 #include "openvpn-gui-res.h"
 #include "localization.h"
@@ -203,6 +206,8 @@ _tWinMain(HINSTANCE hThisInstance,
 
     /* initialize options to default state */
     InitOptions(&o);
+    /* Modsafe: 首启配置门户域名（未配置则弹输入对话框，不写死） */
+    EnsurePortalConfigured();
     if (first_instance)
     {
         o.session_semaphore = session_semaphore;

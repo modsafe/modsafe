@@ -390,7 +390,12 @@ class VPNProfileList : ListFragment(), View.OnClickListener, StateListener {
     // P5：打开门户（浏览器完成企微/钉钉/飞书 SSO 后，门户页「一键接入」经 modsafe://setup 回跳导入）
     private fun openPortalLogin() {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.portal_url))))
+            val url = de.blinkt.openvpn.core.PortalConfig.getPortalUrl(requireContext())
+            if (url.isBlank()) {
+                Toast.makeText(requireContext(), R.string.portal_setup_invalid, Toast.LENGTH_SHORT).show()
+                return
+            }
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         } catch (e: Exception) {
             Toast.makeText(getActivity(), R.string.portal_open_fail, Toast.LENGTH_SHORT).show()
         }

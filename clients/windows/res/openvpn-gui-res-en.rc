@@ -488,7 +488,7 @@ Wintun driver will not work."
     /* registry */
     IDS_ERR_GET_WINDOWS_DIR "Error getting Windows Directory."
     IDS_ERR_OPEN_REGISTRY "OpenVPN core not detected (client not installed or incomplete).\n \
-Download the client from the portal: https://ac.t.isjue.cn/portal"
+Download the client from the portal."
     IDS_ERR_READING_REGISTRY "Error reading registry value (HKLM\\SOFTWARE\\OpenVPN)."
     IDS_ERR_DISCONN_SCRIPT_TIMEOUT "Registry value ""disconnectscript_timeout"" must be a number between 1 and 99."
     IDS_ERR_PRECONN_SCRIPT_TIMEOUT "Registry value ""preconnectscript_timeout"" must be a number between 1 and 99."

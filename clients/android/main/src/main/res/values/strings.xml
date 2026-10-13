@@ -530,7 +530,6 @@
     <!-- Modsafe: P5 portal login import (browser IM SSO → modsafe://setup deep link back) -->
     <string name="portal_login">Portal login &amp; import</string>
     <string name="portal_open_fail">No browser available</string>
-    <string name="portal_url" translatable="false">https://ac.t.isjue.cn</string>
     <!-- Modsafe: P6 in-app update (feed + download + signature check + PackageInstaller) -->
     <string name="menu_check_update">Check for updates</string>
     <string name="update_available">New version %s available</string>
@@ -548,5 +547,13 @@
     <string name="modsafe_auth_required_title">Authentication required</string>
     <string name="modsafe_auth_required_msg">A browser window is needed to complete the network authentication. Open the browser now?</string>
     <string name="modsafe_auth_open">Open browser</string>
+
+    <!-- Modsafe: 首启门户域名配置（不写死，首次打开时配置） -->
+    <string name="portal_setup_title">Portal setup</string>
+    <string name="portal_setup_message">Enter your organization\'s Modsafe portal address to continue.</string>
+    <string name="portal_setup_hint">https://portal.example.com</string>
+    <string name="portal_setup_save">Save</string>
+    <string name="portal_setup_saved">Portal address saved.</string>
+    <string name="portal_setup_invalid">Invalid address. Please enter a full https:// URL.</string>
 
 </resources>

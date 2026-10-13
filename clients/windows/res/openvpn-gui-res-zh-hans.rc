@@ -473,7 +473,7 @@ Wintun驱动程序将无法正常工作。"
     /* registry */
     IDS_ERR_GET_WINDOWS_DIR "获取 Windows 目录时发生错误。"
     IDS_ERR_OPEN_REGISTRY "未检测到 OpenVPN 连接核心（客户端未安装或安装不完整）。\n\
-请从员工门户下载安装：https://ac.t.isjue.cn/portal"
+请从员工门户下载安装。"
     IDS_ERR_READING_REGISTRY "读取系统注册表值 (HKLM\\SOFTWARE\\OpenVPN) 时发生错误。"
     IDS_ERR_DISCONN_SCRIPT_TIMEOUT "系统注册表值「disconnectscript_timeout」必须为 1 到 99 之间的数字。"
     IDS_ERR_PRECONN_SCRIPT_TIMEOUT "系统注册表值「preconnectscript_timeout」必须为 1 到 99 之间的数字。"

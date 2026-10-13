@@ -80,7 +80,7 @@ class ModsafeAuthActivity : BaseActivity() {
             return false
         }
         // modsafe 域名：页内渲染；命中回调即由 onPageFinished 收尾
-        if (host in MODSAFE_HOSTS) return false
+        if (host in modsafeHosts(this)) return false
         // IM 授权域名：按锚点包名拉起对应 App（决议：拉起钉钉/企业微信/飞书认证）
         IM_HOST_PACKAGES[host]?.let { pkg ->
             if (dispatch(u, pkg)) return true
@@ -104,7 +104,7 @@ class ModsafeAuthActivity : BaseActivity() {
 
     private fun isCallbackUrl(url: String): Boolean {
         val u = Uri.parse(url)
-        return u.host in MODSAFE_HOSTS && u.path?.contains("/callback") == true
+        return u.host in modsafeHosts(this) && u.path?.contains("/callback") == true
     }
 
     override fun onBackPressed() {
@@ -123,6 +123,8 @@ class ModsafeAuthActivity : BaseActivity() {
             "open.feishu.cn" to "com.ss.android.lark",
         )
         private val IM_SCHEMES = setOf("dingtalk", "wework", "feishu", "lark")
-        private val MODSAFE_HOSTS = setOf("192.168.0.180", "192.168.0.140", "ac.t.isjue.cn")
+        // 首启配置的门户域名白名单（未配置=空集=全拒绝）
+        private fun modsafeHosts(context: android.content.Context): Set<String> =
+            de.blinkt.openvpn.core.PortalConfig.allowedHosts(context)
     }
 }
