@@ -75,7 +75,7 @@ if (NOT ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} MATCHES "build/intermediates/cmake/.*s
     target_include_directories(ovpn3 PUBLIC
             ${CMAKE_CURRENT_SOURCE_DIR}/lzo/include
             ${CMAKE_CURRENT_SOURCE_DIR}/openvpn3
-            ${CMAKE_CURRENT_SOURCE_DIR}/asio/asio/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/asio/include
             ${CMAKE_CURRENT_SOURCE_DIR}/openvpn3/client
             ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls/include
             )

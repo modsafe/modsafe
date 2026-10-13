@@ -58,7 +58,7 @@ object AppUpdater {
         val feedUrl = de.blinkt.openvpn.core.PortalConfig.getPortalUrl(activity) + FEED_PATH
         Thread {
             try {
-                val latest = fetchFeed(feedUrl)
+                val latest = fetchFeed(feedUrl, activity)
                 if (latest.versionCode <= currentVersionCode(activity)) {
                     if (force) {
                         // Toast 必须在主线程（#135：后台线程直接 toast 会崩 Looper.prepare）
@@ -77,7 +77,7 @@ object AppUpdater {
         }.start()
     }
 
-    private fun fetchFeed(feedUrl: String): Latest {
+    private fun fetchFeed(feedUrl: String, activity: Activity): Latest {
         val uri = Uri.parse(feedUrl)
         // 白名单域 + https + 固定路径，防任意源下发升级（同 deep link 校验口径）
         if (uri.scheme != "https" || (uri.host ?: "") !in allowedHosts(activity)) {
