@@ -68,23 +68,23 @@ endif()
 endif ()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    Wtsapi32.lib
-    Netapi32.lib
-    ws2_32.lib
-    Winhttp.lib
-    Secur32.lib
-    Comctl32.lib
-    Crypt32.lib
-    Shlwapi.lib
-    Advapi32.lib
-    Shell32.lib
-    Gdi32.lib
-    Comdlg32.lib
-    Ole32.lib
-    Cryptui.lib
-    Wininet.lib
-    Iphlpapi.lib
-    Ntdll.lib)
+    wtsapi32
+    netapi32
+    ws2_32
+    winhttp
+    secur32
+    comctl32
+    crypt32
+    shlwapi
+    advapi32
+    shell32
+    gdi32
+    comdlg32
+    ole32
+    cryptui
+    wininet
+    iphlpapi
+    ntdll)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -166,18 +166,18 @@ add_library(${PROJECT_NAME_PLAP} SHARED
     plap/openvpn-plap-res.rc)
 
 target_link_libraries(${PROJECT_NAME_PLAP} PRIVATE
-    ws2_32.lib
-    Comctl32.lib
-    Winhttp.lib
-    Crypt32.lib
-    Ole32.lib
-    Shlwapi.lib
-    Secur32.lib
-    Gdi32.lib
-    Cryptui.lib
-    Rpcrt4.lib
-    Iphlpapi.lib
-    Ntdll.lib)
+    ws2_32
+    comctl32
+    winhttp
+    crypt32
+    ole32
+    shlwapi
+    secur32
+    gdi32
+    cryptui
+    rpcrt4
+    iphlpapi
+    ntdll)
 
 if (MSVC)
     add_dependencies(${PROJECT_NAME_PLAP} msg_header_gen)
@@ -200,7 +200,7 @@ add_executable(${TEST_PLAP_EXE}
 
 target_link_libraries(${TEST_PLAP_EXE} PRIVATE
     Rpcrt4
-    Ole32
+    ole32
     Shlwapi
     Gdi32)
 

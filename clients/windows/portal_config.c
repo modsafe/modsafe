@@ -7,7 +7,6 @@
 
 #define IDD_PORTAL_SETUP 1001
 #define IDC_PORTAL_URL  1002
-#define IDC_PORTAL_HINT 1003
 
 static TCHAR g_portal_url[256] = _T("");
 
@@ -37,21 +36,26 @@ BOOL SetPortalUrl(LPCTSTR url)
     return ok;
 }
 
-/* ---- 首启输入对话框（内存模板，避免 .rc 资源改动） ---- */
+/* ---- 首启输入对话框（内存模板；packed 布局与 Win32 解析器一致） ---- */
 
 static INT_PTR CALLBACK PortalSetupProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     (void)lParam;
     switch (msg) {
     case WM_INITDIALOG:
-        SetWindowText(hDlg, _T("Modsafe portal setup"));
-        SetWindowText(GetDlgItem(hDlg, IDC_PORTAL_HINT),
-                      _T("Enter your organization's Modsafe portal address:"));
-        SetFocus(GetDlgItem(hDlg, IDC_PORTAL_URL));
-        return FALSE;
+        /* 标题/标签/按钮文案均在模板内；首个可聚焦控件=编辑框 */
+        return TRUE;
     case WM_COMMAND:
         if (LOWORD(wParam) == IDOK) {
-            GetWindowText(GetDlgItem(hDlg, IDC_PORTAL_URL), g_portal_url, _countof(g_portal_url));
+            /* 枚举子控件找编辑框（GetWindow/GetDlgCtrlID 为确定存在的导出） */
+            HWND hChild = GetWindow(hDlg, GW_CHILD);
+            while (hChild != NULL) {
+                if (GetDlgCtrlID(hChild) == IDC_PORTAL_URL) {
+                    GetWindowText(hChild, g_portal_url, _countof(g_portal_url));
+                    break;
+                }
+                hChild = GetWindow(hChild, GW_HWNDNEXT);
+            }
             if (_tcslen(g_portal_url) > 0) {
                 EndDialog(hDlg, IDOK);
             } else {
@@ -65,61 +69,68 @@ static INT_PTR CALLBACK PortalSetupProc(HWND hDlg, UINT msg, WPARAM wParam, LPAR
     return FALSE;
 }
 
-/* 显示首启配置对话框；返回 TRUE=已配置 */
 static BOOL PromptPortalSetup(void)
 {
-    /* 内存对话框模板：标签 + 编辑框 + OK/Cancel */
+    /* DLGTEMPLATE(18) + menu(2) + class(2) + 标题串；
+       每项：DLGITEMTEMPLATE(20) + 类原子(2+2) + 标题串 + 附加数据计数(2) */
     #pragma pack(push, 1)
     typedef struct {
         DLGTEMPLATE dt;
-        WORD wMenu, wClass, wTitle;
-        WORD wPointSize;
-        WCHAR szTitle[20];
+        WORD wMenu, wClass;
+        WCHAR szTitle[16];
         struct {
             DLGITEMTEMPLATE dit;
-            WORD wClass, wTitle;
-            WORD wId;
-            WORD wStyle, x, y, cx, cy;
+            WORD wClassAtom;          /* 0xFFFF = 预定义类 */
+            WORD wClassCode;          /* 0x0082 静态 / 0x0081 编辑 / 0x0080 按钮 */
+            WCHAR szItemTitle[64];
+            WORD wExtra;              /* 附加创建数据字节数 = 0 */
         } label, edit, btnOk, btnCancel;
-    } PortalDlg;
+    } PortalTemplate;
     #pragma pack(pop)
 
-    ZeroMemory(&PortalDlg, sizeof(PortalDlg));
-    PortalDlg.dt.style = DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU;
-    PortalDlg.dt.cdit = 4;
-    PortalDlg.wPointSize = 8;
-    lstrcpyW(PortalDlg.szTitle, L"Modsafe");
+    PortalTemplate t;
+    ZeroMemory(&t, sizeof(t));
+    t.dt.style = DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_SETFONT;
+    t.dt.cdit = 4;
+    t.dt.cx = 300;
+    t.dt.cy = 92;
+    t.wMenu = 0;
+    t.wClass = 0;
+    lstrcpyW(t.szTitle, L"Modsafe");
 
-    /* 标签 */
-    PortalDlg.label.dit.style = WS_CHILD | WS_VISIBLE | SS_LEFT;
-    PortalDlg.label.dit.x = 10; PortalDlg.label.dit.y = 10;
-    PortalDlg.label.dit.cx = 280; PortalDlg.label.dit.cy = 20;
-    PortalDlg.label.wClass = 0xFFFF; PortalDlg.label.wTitle = 0xFFFF; /* static */
-    PortalDlg.label.wId = IDC_PORTAL_HINT;
+    /* 标签（静态） */
+    t.label.dit.style = WS_CHILD | WS_VISIBLE | SS_LEFT;
+    t.label.dit.x = 10; t.label.dit.y = 10;
+    t.label.dit.cx = 280; t.label.dit.cy = 16;
+    t.label.dit.id = (WORD)-1;
+    t.label.wClassAtom = 0xFFFF; t.label.wClassCode = 0x0082;
+    lstrcpyW(t.label.szItemTitle, L"Enter your organization's portal address (https://...):");
 
     /* 编辑框 */
-    PortalDlg.edit.dit.style = WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL;
-    PortalDlg.edit.dit.x = 10; PortalDlg.edit.dit.y = 35;
-    PortalDlg.edit.dit.cx = 280; PortalDlg.edit.dit.cy = 14;
-    PortalDlg.edit.wClass = 0xFFFF; PortalDlg.edit.wTitle = 0xFFFF; /* edit */
-    PortalDlg.edit.wId = IDC_PORTAL_URL;
+    t.edit.dit.style = WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL;
+    t.edit.dit.x = 10; t.edit.dit.y = 32;
+    t.edit.dit.cx = 280; t.edit.dit.cy = 16;
+    t.edit.dit.id = IDC_PORTAL_URL;
+    t.edit.wClassAtom = 0xFFFF; t.edit.wClassCode = 0x0081;
 
     /* OK */
-    PortalDlg.btnOk.dit.style = WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON;
-    PortalDlg.btnOk.dit.x = 130; PortalDlg.btnOk.dit.y = 60;
-    PortalDlg.btnOk.dit.cx = 50; PortalDlg.btnOk.dit.cy = 14;
-    PortalDlg.btnOk.wClass = 0xFFFF; PortalDlg.btnOk.wTitle = 0xFFFF; /* button */
-    PortalDlg.btnOk.wId = IDOK;
+    t.btnOk.dit.style = WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON;
+    t.btnOk.dit.x = 100; t.btnOk.dit.y = 58;
+    t.btnOk.dit.cx = 60; t.btnOk.dit.cy = 18;
+    t.btnOk.dit.id = IDOK;
+    t.btnOk.wClassAtom = 0xFFFF; t.btnOk.wClassCode = 0x0080;
+    lstrcpyW(t.btnOk.szItemTitle, L"OK");
 
     /* Cancel */
-    PortalDlg.btnCancel.dit.style = WS_CHILD | WS_VISIBLE;
-    PortalDlg.btnCancel.dit.x = 190; PortalDlg.btnCancel.dit.y = 60;
-    PortalDlg.btnCancel.dit.cx = 50; PortalDlg.btnCancel.dit.cy = 14;
-    PortalDlg.btnCancel.wClass = 0xFFFF; PortalDlg.btnCancel.wTitle = 0xFFFF; /* button */
-    PortalDlg.btnCancel.wId = IDCANCEL;
+    t.btnCancel.dit.style = WS_CHILD | WS_VISIBLE;
+    t.btnCancel.dit.x = 170; t.btnCancel.dit.y = 58;
+    t.btnCancel.dit.cx = 60; t.btnCancel.dit.cy = 18;
+    t.btnCancel.dit.id = IDCANCEL;
+    t.btnCancel.wClassAtom = 0xFFFF; t.btnCancel.wClassCode = 0x0080;
+    lstrcpyW(t.btnCancel.szItemTitle, L"Cancel");
 
     INT_PTR r = DialogBoxIndirectParam(GetModuleHandle(NULL),
-                                       (LPCDLGTEMPLATE)&PortalDlg,
+                                       (LPCDLGTEMPLATE)&t,
                                        NULL, PortalSetupProc, 0);
     if (r == IDOK && _tcslen(g_portal_url) > 0) {
         return SetPortalUrl(g_portal_url);
@@ -127,7 +138,7 @@ static BOOL PromptPortalSetup(void)
     return FALSE;
 }
 
-/* 供 WinMain 调用：未配置则弹框；返回 TRUE=已配置（或用户取消后重试） */
+/* 供 WinMain 调用：未配置则弹框；返回 TRUE=已配置 */
 BOOL EnsurePortalConfigured(void)
 {
     TCHAR url[256];
